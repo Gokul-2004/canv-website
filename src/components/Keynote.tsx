@@ -1,4 +1,4 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { CalendarPlus, CheckCircle, User } from "lucide-react";
 import { Button } from "./ui/button";
@@ -38,14 +38,18 @@ const SpeakerCard = ({
   index: number;
 }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const isInView = useInView(ref, { once: false, margin: "-50px" });
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-      animate={isInView ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.15 }}
+      initial={{ opacity: 0, x: 60, scale: 0.95 }}
+      animate={isInView ? { opacity: 1, x: 0, scale: 1 } : { opacity: 0, x: 60, scale: 0.95 }}
+      transition={{ 
+        duration: 0.6, 
+        delay: index * 0.15,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }}
       className="group"
     >
       <div className="glass-card rounded-2xl p-6 h-full transition-all duration-500 hover:shadow-xl">
@@ -69,32 +73,45 @@ const SpeakerCard = ({
 };
 
 export const Keynote = () => {
-  const headerRef = useRef(null);
-  const isHeaderInView = useInView(headerRef, { once: true, margin: "-100px" });
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: false, margin: "-20%" });
+  
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const backgroundX = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
 
   return (
-    <section id="keynote" className="section-padding hero-gradient relative overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute inset-0 overflow-hidden">
+    <div 
+      ref={sectionRef}
+      id="keynote" 
+      className="min-h-screen hero-gradient relative overflow-hidden flex items-center"
+    >
+      {/* Background elements with parallax */}
+      <motion.div 
+        style={{ x: backgroundX }}
+        className="absolute inset-0 overflow-hidden"
+      >
         <motion.div
           className="absolute top-1/3 right-0 w-[400px] h-[400px] bg-primary/10 rounded-full blur-3xl"
           animate={{ x: [0, -30, 0] }}
           transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
         />
-      </div>
+      </motion.div>
 
-      <div className="container-tight relative z-10">
+      <div className="container-tight relative z-10 py-24 md:py-32">
         <motion.div
-          ref={headerRef}
-          initial={{ opacity: 0, y: 30 }}
-          animate={isHeaderInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+          initial={{ opacity: 0, y: 60 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="text-center mb-16"
         >
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
-            animate={isHeaderInView ? { opacity: 1, scale: 1 } : {}}
+            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             className="inline-flex items-center gap-2 glass-dark rounded-full px-4 py-2 mb-6"
           >
@@ -113,10 +130,9 @@ export const Keynote = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* What attendees will learn */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true, margin: "-100px" }}
+            initial={{ opacity: 0, x: -60, scale: 0.95 }}
+            animate={isInView ? { opacity: 1, x: 0, scale: 1 } : { opacity: 0, x: -60, scale: 0.95 }}
+            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="glass-dark rounded-2xl p-8"
           >
             <h3 className="text-xl font-bold text-primary-foreground mb-6">
@@ -127,9 +143,8 @@ export const Keynote = () => {
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                  viewport={{ once: true }}
+                  animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                  transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
                   className="flex items-start gap-3"
                 >
                   <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
@@ -158,14 +173,21 @@ export const Keynote = () => {
 
           {/* Speakers */}
           <div className="space-y-4">
-            <h3 className="text-xl font-bold text-primary-foreground mb-6">Featured Speakers</h3>
+            <motion.h3 
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-xl font-bold text-primary-foreground mb-6"
+            >
+              Featured Speakers
+            </motion.h3>
             {speakers.map((speaker, index) => (
               <SpeakerCard key={speaker.name} speaker={speaker} index={index} />
             ))}
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

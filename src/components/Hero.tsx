@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Calendar, MapPin, Users, Lightbulb, Stethoscope } from "lucide-react";
+import { Calendar, MapPin, Users, Lightbulb, Stethoscope, ChevronDown } from "lucide-react";
 import { Button } from "./ui/button";
 
 const CountdownTimer = () => {
@@ -75,7 +75,7 @@ const stats = [
 
 export const Hero = () => {
   return (
-    <section className="relative min-h-screen hero-gradient overflow-hidden">
+    <div className="relative min-h-screen hero-gradient overflow-hidden flex flex-col">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -96,7 +96,7 @@ export const Hero = () => {
         />
       </div>
 
-      <div className="container-tight relative z-10 pt-32 pb-20 md:pt-40 md:pb-32">
+      <div className="container-tight relative z-10 pt-32 pb-20 md:pt-40 md:pb-24 flex-1 flex flex-col justify-center">
         <div className="max-w-4xl mx-auto text-center">
           {/* Sponsor Badge */}
           <motion.div
@@ -166,7 +166,7 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.7 }}
-            className="flex items-center justify-center gap-8 md:gap-16 mb-12"
+            className="flex items-center justify-center gap-8 md:gap-16 mb-10"
           >
             {stats.map((stat, index) => (
               <motion.div
@@ -190,7 +190,7 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.9 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
           >
             <Button
               asChild
@@ -248,12 +248,13 @@ export const Hero = () => {
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="w-6 h-10 border-2 border-primary-foreground/30 rounded-full flex items-start justify-center p-2"
+          className="flex flex-col items-center gap-2 text-primary-foreground/40"
         >
-          <motion.div className="w-1.5 h-1.5 bg-primary rounded-full" />
+          <span className="text-xs uppercase tracking-widest">Scroll</span>
+          <ChevronDown className="w-5 h-5" />
         </motion.div>
       </motion.div>
-    </section>
+    </div>
   );
 };
 

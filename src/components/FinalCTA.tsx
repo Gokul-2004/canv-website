@@ -1,10 +1,25 @@
-import { motion } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import { ArrowRight, Award } from "lucide-react";
 import { Button } from "./ui/button";
 
 export const FinalCTA = () => {
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: false, margin: "-20%" });
+  
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const scale = useTransform(scrollYProgress, [0, 0.5], [0.9, 1]);
+  const y = useTransform(scrollYProgress, [0, 0.5], [50, 0]);
+
   return (
-    <section className="section-padding hero-gradient relative overflow-hidden">
+    <motion.div 
+      ref={sectionRef}
+      className="min-h-screen hero-gradient relative overflow-hidden flex items-center"
+    >
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -16,20 +31,21 @@ export const FinalCTA = () => {
         />
       </div>
 
-      <div className="container-tight relative z-10">
+      <motion.div 
+        style={{ scale, y }}
+        className="container-tight relative z-10 py-24 md:py-32"
+      >
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            initial={{ opacity: 0, y: 60 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             {/* Award Badge */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              viewport={{ once: true }}
               className="inline-flex items-center gap-2 glass-dark rounded-full px-5 py-2.5 mb-8"
             >
               <Award className="w-5 h-5 text-primary" />
@@ -38,16 +54,29 @@ export const FinalCTA = () => {
               </span>
             </motion.div>
 
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-6 leading-tight">
+            <motion.h2 
+              initial={{ opacity: 0, y: 40 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-6 leading-tight"
+            >
               Large enterprises switch from legacy systems to tap into{" "}
               <span className="gradient-text">AI innovations</span> at disruptive prices
-            </h2>
+            </motion.h2>
 
-            <p className="text-xl text-primary-foreground/70 mb-10">
+            <motion.p 
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-xl text-primary-foreground/70 mb-10"
+            >
               Certinal Emerges as New 'eSign' Leader in IDC MarketScape '23.
-            </p>
+            </motion.p>
 
             <motion.div
+              initial={{ opacity: 0, y: 30, scale: 0.9 }}
+              animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.9 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -68,8 +97,8 @@ export const FinalCTA = () => {
             </motion.div>
           </motion.div>
         </div>
-      </div>
-    </section>
+      </motion.div>
+    </motion.div>
   );
 };
 
