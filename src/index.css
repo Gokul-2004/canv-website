@@ -141,6 +141,26 @@
   .container-tight {
     @apply max-w-6xl mx-auto px-6;
   }
+
+  /* Scroll snap container */
+  .scroll-container {
+    @apply h-screen overflow-y-auto;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+  }
+
+  /* Snap sections */
+  .snap-section {
+    @apply min-h-screen;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  /* For sections that don't need full height */
+  .snap-section-auto {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+  }
 }
 
 @layer utilities {

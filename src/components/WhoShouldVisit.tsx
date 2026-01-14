@@ -1,4 +1,4 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Monitor, Scale, Rocket, Users } from "lucide-react";
 
@@ -26,26 +26,35 @@ const personas = [
 ];
 
 export const WhoShouldVisit = () => {
-  const headerRef = useRef(null);
-  const isHeaderInView = useInView(headerRef, { once: true, margin: "-100px" });
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: false, margin: "-20%" });
+  
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], ["5%", "-5%"]);
 
   return (
-    <section className="section-padding hero-gradient relative overflow-hidden">
+    <motion.div 
+      ref={sectionRef}
+      className="min-h-screen hero-gradient relative overflow-hidden flex items-center"
+    >
       {/* Background elements */}
-      <div className="absolute inset-0 overflow-hidden">
+      <motion.div style={{ y }} className="absolute inset-0 overflow-hidden">
         <motion.div
           className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-accent/10 rounded-full blur-3xl"
           animate={{ y: [0, -30, 0] }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         />
-      </div>
+      </motion.div>
 
-      <div className="container-tight relative z-10">
+      <div className="container-tight relative z-10 py-24 md:py-32">
         <motion.div
-          ref={headerRef}
-          initial={{ opacity: 0, y: 30 }}
-          animate={isHeaderInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+          initial={{ opacity: 0, y: 60 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-6">
@@ -56,16 +65,20 @@ export const WhoShouldVisit = () => {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {personas.map((persona, index) => {
-            const ref = useRef(null);
-            const isInView = useInView(ref, { once: true, margin: "-50px" });
+            const cardRef = useRef(null);
+            const cardInView = useInView(cardRef, { once: false, margin: "-50px" });
 
             return (
               <motion.div
                 key={persona.title}
-                ref={ref}
-                initial={{ opacity: 0, y: 40 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                ref={cardRef}
+                initial={{ opacity: 0, y: 60, scale: 0.9 }}
+                animate={cardInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 60, scale: 0.9 }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: index * 0.1,
+                  ease: [0.25, 0.46, 0.45, 0.94]
+                }}
                 className="group"
               >
                 <div className="glass-dark rounded-2xl p-6 h-full text-center transition-all duration-500 hover:-translate-y-2 hover:shadow-xl">
@@ -87,7 +100,7 @@ export const WhoShouldVisit = () => {
           })}
         </div>
       </div>
-    </section>
+    </motion.div>
   );
 };
 
