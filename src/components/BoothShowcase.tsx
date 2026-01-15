@@ -132,43 +132,57 @@ export const BoothShowcase = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="glass-card rounded-2xl p-5 md:p-6 mb-12 max-w-3xl mx-auto"
+          className="mb-12 max-w-3xl mx-auto"
         >
           <div className="flex items-center justify-between mb-4 gap-3">
             <div>
-              <p className="text-sm font-medium text-foreground">Hall layout</p>
-              <p className="text-xs text-muted-foreground">
-                Tap to view the full map and locate Booth 121.
+              <h3 className="text-lg font-bold text-foreground mb-1">Hall Layout</h3>
+              <p className="text-sm text-muted-foreground">
+                Click to view the full map and locate Booth 121
               </p>
             </div>
           </div>
 
           <Dialog>
             <DialogTrigger asChild>
-              <button
-                className="relative w-full bg-muted rounded-xl overflow-hidden border border-border/40 group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="relative w-full rounded-2xl overflow-hidden border-2 border-primary/20 bg-gradient-to-br from-background to-muted/50 shadow-lg hover:shadow-xl transition-all duration-300 group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                 type="button"
               >
-                <img
-                  src={layoutImage}
-                  alt="Hall layout with Apollo stall and booth locations"
-                  className="w-full h-auto block max-h-72 object-contain"
-                />
-                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
-                <div className="absolute bottom-3 right-3 inline-flex items-center gap-1 rounded-full bg-background/80 px-3 py-1 text-xs font-medium text-foreground shadow-sm">
-                  <Maximize2 className="w-3 h-3" />
-                  View full map
+                {/* Gradient border effect on hover */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/10 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                
+                <div className="relative p-4">
+                  <img
+                    src={layoutImage}
+                    alt="Hall layout with Apollo stall and booth locations"
+                    className="w-full h-auto block max-h-80 object-contain rounded-lg shadow-inner"
+                  />
                 </div>
-              </button>
+                
+                {/* Enhanced button overlay */}
+                <div className="absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-lg group-hover:bg-primary/90 transition-colors">
+                  <Maximize2 className="w-4 h-4" />
+                  <span>View Full Map</span>
+                </div>
+              </motion.button>
             </DialogTrigger>
 
-            <DialogContent className="max-w-4xl p-4 md:p-6">
-              <div className="rounded-xl overflow-hidden border border-border/40 bg-muted">
-                <img
-                  src={layoutImage}
-                  alt="Hall layout with Apollo stall and booth locations"
-                  className="w-full h-auto block max-h-[80vh] object-contain"
-                />
+            <DialogContent className="max-w-5xl p-0 overflow-hidden">
+              <div className="p-6 bg-background">
+                <h3 className="text-xl font-bold text-foreground mb-4">Hall 4-6 Floor Plan</h3>
+                <div className="rounded-xl overflow-hidden border-2 border-border bg-muted">
+                  <img
+                    src={layoutImage}
+                    alt="Hall layout with Apollo stall and booth locations"
+                    className="w-full h-auto block max-h-[85vh] object-contain"
+                  />
+                </div>
+                <p className="text-sm text-muted-foreground mt-4 text-center">
+                  Find Certinal at <span className="font-semibold text-primary">Booth #121</span>
+                </p>
               </div>
             </DialogContent>
           </Dialog>
