@@ -28,10 +28,10 @@ const testimonials = [
     initials: "NK",
   },
   {
-    quote: "Add your third testimonial quote here.",
-    name: "Speaker Name",
-    title: "Title, Organization",
-    initials: "SN",
+    quote: "Implementing Certinal eSign's digital solutions has significantly streamlined and secured our consent processes. Integration with our EMR system optimizes operations and data management, further supporting Bumrungrad's commitment to innovative healthcare and patient-centric care delivery.",
+    name: "Henrik Andersson",
+    title: "CEO, Chief Innovation & Technology Officer of Bumrungrad International Hospital",
+    initials: "HA",
   },
 ];
 
