@@ -70,7 +70,7 @@ export const Proof = () => {
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-wrap items-center justify-center gap-4 md:gap-8 mb-10"
+          className="flex flex-wrap items-center justify-center gap-4 md:gap-8 mb-16"
         >
           {badges.map((badge, index) => (
             <motion.div
@@ -94,12 +94,12 @@ export const Proof = () => {
           transition={{ duration: 0.7, delay: 0.2 }}
           className="max-w-4xl mx-auto"
         >
-          <div className="glass-card rounded-2xl p-6 md:p-8 relative overflow-hidden">
+          <div className="glass-card rounded-2xl p-8 md:p-12 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-accent to-primary" />
             
-            <Quote className="w-10 h-10 text-primary/30 mb-4" />
+            <Quote className="w-10 h-10 text-primary/30 mb-6" />
             
-            <blockquote className="text-lg md:text-xl text-foreground font-medium leading-relaxed mb-6 italic">
+            <blockquote className="text-xl md:text-2xl text-foreground font-medium leading-relaxed mb-8 italic">
               "Contracts signed digitally through the Certinal platform are simple, easy and traceable. We know where it is and we can push people to sign if they haven't done it. This has been quite a game changer for our organization."
             </blockquote>
             
