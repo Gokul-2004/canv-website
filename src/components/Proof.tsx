@@ -1,6 +1,6 @@
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { Quote, Shield, Award, Lock } from "lucide-react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import { Quote, Shield, Award, Lock, ChevronLeft, ChevronRight } from "lucide-react";
 
 const institutions = [
   { name: "Monash Health", logo: "M" },
@@ -14,9 +14,32 @@ const badges = [
   { icon: Lock, label: "Built for scale" },
 ];
 
+const testimonials = [
+  {
+    quote: "Contracts signed digitally through the Certinal platform are simple, easy and traceable. We know where it is and we can push people to sign if they haven't done it. This has been quite a game changer for our organization.",
+    name: "Neil Sigamoney",
+    title: "Director Engineering & Corporate Services, At Monash Health",
+    initials: "NS",
+  },
+  {
+    quote: "Integrating Certinal eSign technology aligns with Bumrungrad's commitment to create seamless, secure, and patient-centered experiences through advanced solutions. By digitizing our workflows, we simplify the registration process, reduce wait times, and enhance overall patient satisfaction—all core to our mission of delivering world-class healthcare.",
+    name: "Nipat Kulabkaw",
+    title: "MD, Co-Chief Executive Officer, At Bumrungrad International Hospital",
+    initials: "NK",
+  },
+];
+
 export const Proof = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: false, margin: "-20%" });
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+    }, 6000); // Auto-rotate every 6 seconds
+    return () => clearInterval(interval);
+  }, []);
   
   return (
     <motion.div 
@@ -87,35 +110,77 @@ export const Proof = () => {
           ))}
         </motion.div>
 
-        {/* Testimonial */}
+        {/* Testimonial Slider */}
         <motion.div
           initial={{ opacity: 0, y: 60, scale: 0.95 }}
           animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 60, scale: 0.95 }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="max-w-4xl mx-auto"
+          className="max-w-4xl mx-auto relative"
         >
           <div className="glass-card rounded-2xl p-8 md:p-12 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-accent to-primary" />
             
-            <Quote className="w-10 h-10 text-primary/30 mb-6" />
-            
-            <blockquote className="text-xl md:text-2xl text-foreground font-medium leading-relaxed mb-8 italic">
-              "Contracts signed digitally through the Certinal platform are simple, easy and traceable. We know where it is and we can push people to sign if they haven't done it. This has been quite a game changer for our organization."
-            </blockquote>
-            
-            <div className="flex items-center gap-4">
-              <motion.div 
-                className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center"
-                whileHover={{ scale: 1.1 }}
+            {/* Navigation Arrows */}
+            <button
+              onClick={() => setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm border border-border flex items-center justify-center hover:bg-background transition-colors"
+              aria-label="Previous testimonial"
+            >
+              <ChevronLeft className="w-5 h-5 text-foreground" />
+            </button>
+            <button
+              onClick={() => setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm border border-border flex items-center justify-center hover:bg-background transition-colors"
+              aria-label="Next testimonial"
+            >
+              <ChevronRight className="w-5 h-5 text-foreground" />
+            </button>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentTestimonial}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.5 }}
               >
-                <span className="text-primary font-bold">NS</span>
+                <Quote className="w-10 h-10 text-primary/30 mb-6" />
+                
+                <blockquote className="text-xl md:text-2xl text-foreground font-medium leading-relaxed mb-8 italic">
+                  "{testimonials[currentTestimonial].quote}"
+                </blockquote>
+                
+                <div className="flex items-center gap-4">
+                  <motion.div 
+                    className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center"
+                    whileHover={{ scale: 1.1 }}
+                  >
+                    <span className="text-primary font-bold">{testimonials[currentTestimonial].initials}</span>
+                  </motion.div>
+                  <div>
+                    <p className="font-bold text-foreground">{testimonials[currentTestimonial].name}</p>
+                    <p className="text-muted-foreground text-sm">
+                      {testimonials[currentTestimonial].title}
+                    </p>
+                  </div>
+                </div>
               </motion.div>
-              <div>
-                <p className="font-bold text-foreground">Neil Sigamoney</p>
-                <p className="text-muted-foreground text-sm">
-                  Director Engineering & Corporate Services, At Monash Health
-                </p>
-              </div>
+            </AnimatePresence>
+
+            {/* Dots Indicator */}
+            <div className="flex items-center justify-center gap-2 mt-8">
+              {testimonials.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentTestimonial(index)}
+                  className={`w-2 h-2 rounded-full transition-all ${
+                    index === currentTestimonial
+                      ? "bg-primary w-8"
+                      : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                  }`}
+                  aria-label={`Go to testimonial ${index + 1}`}
+                />
+              ))}
             </div>
           </div>
         </motion.div>

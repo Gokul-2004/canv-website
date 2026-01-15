@@ -58,7 +58,7 @@ export const FinalCTA = () => {
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-6 leading-tight"
+              className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-primary-foreground mb-6 leading-tight"
             >
               Large enterprises switch from legacy systems to tap into{" "}
               <span className="gradient-text">AI innovations</span> at disruptive prices
@@ -68,7 +68,7 @@ export const FinalCTA = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-xl text-primary-foreground/70 mb-10"
+              className="text-2xl md:text-3xl text-primary-foreground/70 mb-10"
             >
               Certinal Emerges as New 'eSign' Leader in IDC MarketScape '23.
             </motion.p>
