@@ -65,10 +65,7 @@ const generateCalendarLinks = () => {
   // Outlook Calendar
   const outlookUrl = `https://outlook.live.com/calendar/0/deeplink/compose?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}&startdt=${outlookStart}&enddt=${outlookEnd}`;
   
-  // Apple Calendar (uses Google Calendar link)
-  const appleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${googleStart}/${googleEnd}&details=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}`;
-  
-  return { googleUrl, outlookUrl, appleUrl };
+  return { googleUrl, outlookUrl };
 };
 
 // Generate and download ICS file
@@ -269,17 +266,6 @@ export const Keynote = () => {
                         <path d="M7.5 7.5h9v9h-9z"/>
                       </svg>
                       Outlook Calendar
-                    </a>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <a
-                      href={generateCalendarLinks().appleUrl}
-                      className="flex items-center cursor-pointer"
-                    >
-                      <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C1.79 13.25 4.96 5.87 9.38 5.87c1.15 0 2.09.78 3.15.78 1.06 0 1.88-.78 3.14-.78 2.58.03 5.09 1.8 6.75 4.85-5.87 3.33-4.95 9.94-5.37 12.56zM12.03 3.75c-.59-.68-1.4-1.15-2.27-1.15-.18 0-.36.02-.54.05.18-1.22.89-2.28 1.98-3.03.59-.4 1.28-.67 1.98-.67.18 0 .36.02.54.05-.18 1.22-.89 2.28-1.98 3.03-.59.4-1.28.67-1.98.67-.18 0-.36-.02-.54-.05z"/>
-                      </svg>
-                      Apple Calendar
                     </a>
                   </DropdownMenuItem>
                   <DropdownMenuItem
