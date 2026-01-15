@@ -1,7 +1,9 @@
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { FileCheck, Shield, Settings, ArrowRight } from "lucide-react";
+import { FileCheck, Shield, Settings, ArrowRight, Maximize2 } from "lucide-react";
 import { Button } from "./ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
+import layoutImage from "../../Layout.jpg";
 
 const products = [
   {
@@ -50,11 +52,11 @@ const ProductCard = ({
         delay: index * 0.15,
         ease: [0.25, 0.46, 0.45, 0.94]
       }}
-      className="group relative"
+      className="group relative h-full"
       style={{ perspective: "1000px" }}
     >
-      <div className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${product.color} p-[1px]`}>
-        <div className="glass-card rounded-2xl p-8 h-full transition-all duration-500 group-hover:shadow-xl">
+      <div className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${product.color} p-[1px] h-full`}>
+        <div className="glass-card rounded-2xl p-8 h-full flex flex-col transition-all duration-500 group-hover:shadow-xl">
           <motion.div
             whileHover={{ scale: 1.1, rotate: -5 }}
             className="w-14 h-14 rounded-xl bg-primary flex items-center justify-center mb-6"
@@ -64,7 +66,7 @@ const ProductCard = ({
           
           <h3 className="text-2xl font-bold text-foreground mb-1">{product.name}</h3>
           <p className="text-primary font-medium text-sm mb-4">{product.subtitle}</p>
-          <p className="text-muted-foreground leading-relaxed">{product.description}</p>
+          <p className="text-muted-foreground leading-relaxed flex-grow">{product.description}</p>
 
           <motion.div
             initial={{ x: -10, opacity: 0 }}
@@ -102,7 +104,7 @@ export const BoothShowcase = () => {
       {/* Background decoration */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
-      <div className="container-tight py-24 md:py-32">
+      <div className="container-tight py-10 md:py-14">
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
@@ -111,7 +113,7 @@ export const BoothShowcase = () => {
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
             Experience Certinal Live at{" "}
-            <span className="gradient-text">Booth #A12</span>
+            <span className="gradient-text">Booth #121</span>
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
             A unified platform to operationalize consent, data rights, and regulatory
@@ -119,32 +121,57 @@ export const BoothShowcase = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-16">
+        <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-16 items-stretch">
           {products.map((product, index) => (
             <ProductCard key={product.name} product={product} index={index} />
           ))}
         </div>
 
-        {/* Floor Map Placeholder */}
+        {/* Floor Map - thumbnail + popup */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="glass-card rounded-2xl p-8 mb-12"
+          className="glass-card rounded-2xl p-5 md:p-6 mb-12 max-w-3xl mx-auto"
         >
-          <div className="aspect-[16/6] bg-muted rounded-xl flex items-center justify-center relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
-            <div className="text-center z-10">
-              <motion.div 
-                className="w-20 h-20 rounded-2xl bg-primary mx-auto mb-4 flex items-center justify-center"
-                animate={{ y: [0, -5, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                <span className="text-primary-foreground font-bold text-xl">A12</span>
-              </motion.div>
-              <p className="text-muted-foreground">Floor Map with Certinal Booth Marked</p>
+          <div className="flex items-center justify-between mb-4 gap-3">
+            <div>
+              <p className="text-sm font-medium text-foreground">Hall layout</p>
+              <p className="text-xs text-muted-foreground">
+                Tap to view the full map and locate Booth 121.
+              </p>
             </div>
           </div>
+
+          <Dialog>
+            <DialogTrigger asChild>
+              <button
+                className="relative w-full bg-muted rounded-xl overflow-hidden border border-border/40 group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                type="button"
+              >
+                <img
+                  src={layoutImage}
+                  alt="Hall layout with Apollo stall and booth locations"
+                  className="w-full h-auto block max-h-72 object-contain"
+                />
+                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
+                <div className="absolute bottom-3 right-3 inline-flex items-center gap-1 rounded-full bg-background/80 px-3 py-1 text-xs font-medium text-foreground shadow-sm">
+                  <Maximize2 className="w-3 h-3" />
+                  View full map
+                </div>
+              </button>
+            </DialogTrigger>
+
+            <DialogContent className="max-w-4xl p-4 md:p-6">
+              <div className="rounded-xl overflow-hidden border border-border/40 bg-muted">
+                <img
+                  src={layoutImage}
+                  alt="Hall layout with Apollo stall and booth locations"
+                  className="w-full h-auto block max-h-[80vh] object-contain"
+                />
+              </div>
+            </DialogContent>
+          </Dialog>
         </motion.div>
 
         {/* CTA */}

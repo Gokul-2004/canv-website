@@ -50,7 +50,7 @@ export const WhoShouldVisit = () => {
         />
       </motion.div>
 
-      <div className="container-tight relative z-10 py-24 md:py-32">
+      <div className="container-tight relative z-10 py-10 md:py-14">
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}

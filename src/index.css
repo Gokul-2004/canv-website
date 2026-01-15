@@ -135,31 +135,25 @@
   }
 
   .section-padding {
-    @apply py-24 md:py-32 lg:py-40;
+    @apply py-16 md:py-20 lg:py-24;
   }
 
   .container-tight {
     @apply max-w-6xl mx-auto px-6;
   }
 
-  /* Scroll snap container */
+  /* Scroll container (snap disabled for free scrolling) */
   .scroll-container {
     @apply h-screen overflow-y-auto;
-    scroll-snap-type: y mandatory;
-    scroll-behavior: smooth;
   }
 
-  /* Snap sections */
+  /* Sections (no scroll snapping) */
   .snap-section {
     @apply min-h-screen;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
   }
 
   /* For sections that don't need full height */
   .snap-section-auto {
-    scroll-snap-align: start;
-    scroll-snap-stop: normal;
   }
 }
 

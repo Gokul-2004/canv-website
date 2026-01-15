@@ -1,4 +1,4 @@
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Quote, Shield, Award, Lock } from "lucide-react";
 
@@ -18,23 +18,15 @@ export const Proof = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: false, margin: "-20%" });
   
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.5, 1, 1, 0.5]);
-
   return (
     <motion.div 
       ref={sectionRef}
-      style={{ opacity }}
       className="min-h-screen bg-background relative overflow-hidden flex items-center"
     >
       {/* Background decoration */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
-      <div className="container-tight py-24 md:py-32">
+      <div className="container-tight py-16 md:py-20">
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}

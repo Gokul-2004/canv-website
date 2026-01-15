@@ -87,7 +87,7 @@ export const WhyCertinal = () => {
         className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-px bg-gradient-to-r from-transparent via-border to-transparent" 
       />
       
-      <div className="container-tight py-24 md:py-32">
+      <div className="container-tight py-16 md:py-20">
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}

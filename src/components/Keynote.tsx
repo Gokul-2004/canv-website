@@ -101,7 +101,7 @@ export const Keynote = () => {
         />
       </motion.div>
 
-      <div className="container-tight relative z-10 py-24 md:py-32">
+      <div className="container-tight relative z-10 py-16 md:py-20">
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
@@ -126,19 +126,19 @@ export const Keynote = () => {
             <span className="gradient-text">The Last Broken Step</span> in Digital Care
           </h2>
         </motion.div>
-
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+        
+        <div className="grid lg:grid-cols-2 gap-12 items-stretch">
           {/* What attendees will learn */}
           <motion.div
             initial={{ opacity: 0, x: -60, scale: 0.95 }}
             animate={isInView ? { opacity: 1, x: 0, scale: 1 } : { opacity: 0, x: -60, scale: 0.95 }}
             transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="glass-dark rounded-2xl p-8"
+            className="glass-dark rounded-2xl p-8 h-full flex flex-col"
           >
             <h3 className="text-xl font-bold text-primary-foreground mb-6">
               What Attendees Will Learn
             </h3>
-            <div className="space-y-4">
+            <div className="space-y-4 flex-1">
               {learnings.map((item, index) => (
                 <motion.div
                   key={index}
@@ -172,7 +172,7 @@ export const Keynote = () => {
           </motion.div>
 
           {/* Speakers */}
-          <div className="space-y-4">
+          <div className="space-y-4 h-full flex flex-col">
             <motion.h3 
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : { opacity: 0 }}
@@ -181,9 +181,11 @@ export const Keynote = () => {
             >
               Featured Speakers
             </motion.h3>
-            {speakers.map((speaker, index) => (
-              <SpeakerCard key={speaker.name} speaker={speaker} index={index} />
-            ))}
+            <div className="space-y-4 flex-1">
+              {speakers.map((speaker, index) => (
+                <SpeakerCard key={speaker.name} speaker={speaker} index={index} />
+              ))}
+            </div>
           </div>
         </div>
       </div>

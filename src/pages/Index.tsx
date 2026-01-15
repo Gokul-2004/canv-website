@@ -63,7 +63,7 @@ const Index = () => {
             <Proof />
           </section>
           
-          <section className="snap-section">
+          <section className="snap-section-auto">
             <FinalCTA />
           </section>
           

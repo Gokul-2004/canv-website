@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { Calendar, MapPin, Mail, Phone, ExternalLink } from "lucide-react";
+import { Calendar, MapPin, Mail, Phone, ExternalLink, Award } from "lucide-react";
+import certinalLogo from "../../certinal_logo.svg";
 
 const quickLinks = [
   { name: "Homepage", href: "https://certinal.com" },
@@ -8,7 +9,7 @@ const quickLinks = [
 
 export const Footer = () => {
   return (
-    <footer id="contact" className="bg-secondary pt-20 pb-8">
+    <footer id="contact" className="bg-secondary pt-10 pb-8">
       <div className="container-tight">
         <div className="grid md:grid-cols-3 gap-12 mb-16">
           {/* Event Details */}
@@ -32,8 +33,8 @@ export const Footer = () => {
               </div>
             </div>
             <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
-              <span className="w-2 h-2 bg-primary rounded-full" />
-              <span className="text-sm font-medium text-primary">
+              <Award className="w-4 h-4 text-primary" />
+              <span className="inline-flex items-center rounded-full bg-gradient-to-r from-slate-100 to-cyan-200 px-3 py-[3px] text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-slate-900">
                 Platinum Sponsor & Keynote Partner
               </span>
             </div>
@@ -98,12 +99,13 @@ export const Footer = () => {
         {/* Bottom bar */}
         <div className="pt-8 border-t border-secondary-foreground/10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">C</span>
-              </div>
-              <span className="font-bold text-secondary-foreground">Certinal</span>
-            </div>
+          <div className="flex items-center gap-2">
+            <img
+              src={certinalLogo}
+              alt="Certinal logo"
+              className="h-7 w-auto"
+            />
+          </div>
             <p className="text-secondary-foreground/60 text-sm">
               © 2026 Certinal. All Rights Reserved.
             </p>

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
+import certinalLogo from "../../certinal_logo.svg";
 
 const navLinks = [
   { name: "Why Certinal", href: "#why-certinal" },
@@ -29,8 +30,8 @@ export const Header = () => {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? "bg-secondary/95 backdrop-blur-xl shadow-lg"
-          : "bg-transparent"
+          ? "bg-white/15 backdrop-blur-xl border-b border-white/20 shadow-lg"
+          : "bg-white/8 backdrop-blur-xl border-b border-white/10"
       }`}
     >
       <div className="container-tight">
@@ -42,12 +43,11 @@ export const Header = () => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-xl">C</span>
-            </div>
-            <span className="text-xl font-bold text-primary-foreground">
-              Certinal
-            </span>
+            <img
+              src={certinalLogo}
+              alt="Certinal logo"
+              className="h-8 md:h-9 w-auto"
+            />
           </motion.a>
 
           {/* Desktop Navigation */}
@@ -56,7 +56,7 @@ export const Header = () => {
               <motion.a
                 key={link.name}
                 href={link.href}
-                className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm font-medium relative group"
+                className="text-primary hover:text-primary/80 transition-colors text-sm font-medium relative group"
                 whileHover={{ y: -2 }}
               >
                 {link.name}
@@ -108,7 +108,7 @@ export const Header = () => {
                 <a
                   key={link.name}
                   href={link.href}
-                  className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-lg font-medium py-2"
+                  className="text-primary hover:text-primary/80 transition-colors text-lg font-medium py-2"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.name}

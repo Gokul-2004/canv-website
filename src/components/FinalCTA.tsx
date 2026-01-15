@@ -18,7 +18,7 @@ export const FinalCTA = () => {
   return (
     <motion.div 
       ref={sectionRef}
-      className="min-h-screen hero-gradient relative overflow-hidden flex items-center"
+      className="min-h-[70vh] hero-gradient relative overflow-hidden flex items-start"
     >
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -33,7 +33,7 @@ export const FinalCTA = () => {
 
       <motion.div 
         style={{ scale, y }}
-        className="container-tight relative z-10 py-24 md:py-32"
+        className="container-tight relative z-10 py-10 md:py-14"
       >
         <div className="max-w-4xl mx-auto text-center">
           <motion.div

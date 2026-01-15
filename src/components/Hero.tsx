@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Calendar, MapPin, Users, Lightbulb, Stethoscope, ChevronDown } from "lucide-react";
+import { Calendar, MapPin, Users, Lightbulb, Stethoscope, ChevronDown, Award } from "lucide-react";
 import { Button } from "./ui/button";
 
 const CountdownTimer = () => {
@@ -105,8 +105,8 @@ export const Hero = () => {
             transition={{ duration: 0.6 }}
             className="inline-flex items-center gap-2 glass-dark rounded-full px-4 py-2 mb-8"
           >
-            <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-            <span className="text-sm font-medium text-primary-foreground/90">
+            <Award className="w-4 h-4 text-primary" />
+            <span className="inline-flex items-center rounded-full bg-gradient-to-r from-slate-100 to-cyan-200 px-3 py-[3px] text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-slate-900">
               Platinum Sponsor & Keynote Partner
             </span>
           </motion.div>
@@ -118,8 +118,10 @@ export const Hero = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-4xl md:text-5xl lg:text-7xl font-bold text-primary-foreground leading-tight mb-6"
           >
-            Building Trust in Digital Healthcare{" "}
-            <span className="gradient-text">Starts with Consent</span>
+            CERTINAL&apos;S{" "}
+            <span className="gradient-text">HEALTHCARE</span>{" "}
+            CONSENT &amp; COMPLIANCE{" "}
+            <span className="gradient-text">PLATFORM</span>
           </motion.h1>
 
           {/* Subheadline */}
@@ -209,7 +211,7 @@ export const Hero = () => {
               asChild
               variant="outline"
               size="lg"
-              className="border-primary/40 text-primary-foreground hover:bg-primary/10 rounded-full px-8 py-6 text-lg"
+              className="border-primary/40 text-primary hover:bg-primary/10 hover:text-primary-foreground rounded-full px-8 py-6 text-lg"
             >
               <motion.a
                 href="https://www.certinal.com/request-a-demo"
