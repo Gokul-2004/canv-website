@@ -117,24 +117,24 @@ export const Proof = () => {
           transition={{ duration: 0.7, delay: 0.2 }}
           className="max-w-4xl mx-auto relative"
         >
+          {/* Navigation Arrows - Outside the card */}
+          <button
+            onClick={() => setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 z-10 w-10 h-10 rounded-full bg-background/90 backdrop-blur-sm border border-border shadow-lg flex items-center justify-center hover:bg-background hover:scale-110 transition-all"
+            aria-label="Previous testimonial"
+          >
+            <ChevronLeft className="w-5 h-5 text-foreground" />
+          </button>
+          <button
+            onClick={() => setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 z-10 w-10 h-10 rounded-full bg-background/90 backdrop-blur-sm border border-border shadow-lg flex items-center justify-center hover:bg-background hover:scale-110 transition-all"
+            aria-label="Next testimonial"
+          >
+            <ChevronRight className="w-5 h-5 text-foreground" />
+          </button>
+
           <div className="glass-card rounded-2xl p-8 md:p-12 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-accent to-primary" />
-            
-            {/* Navigation Arrows */}
-            <button
-              onClick={() => setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm border border-border flex items-center justify-center hover:bg-background transition-colors"
-              aria-label="Previous testimonial"
-            >
-              <ChevronLeft className="w-5 h-5 text-foreground" />
-            </button>
-            <button
-              onClick={() => setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm border border-border flex items-center justify-center hover:bg-background transition-colors"
-              aria-label="Next testimonial"
-            >
-              <ChevronRight className="w-5 h-5 text-foreground" />
-            </button>
 
             <AnimatePresence mode="wait">
               <motion.div
@@ -146,7 +146,7 @@ export const Proof = () => {
               >
                 <Quote className="w-10 h-10 text-primary/30 mb-6" />
                 
-                <blockquote className="text-xl md:text-2xl text-foreground font-medium leading-relaxed mb-8 italic">
+                <blockquote className="text-xl md:text-2xl text-foreground font-medium leading-relaxed mb-8 italic px-2">
                   "{testimonials[currentTestimonial].quote}"
                 </blockquote>
                 
