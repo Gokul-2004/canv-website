@@ -38,7 +38,15 @@ export const Proof = () => {
       setError(null);
 
       try {
-        console.log('Submitting form data:', { name, email, title, phone, consent });
+        // Check if Supabase is configured
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+        const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+        
+        if (!supabaseUrl || !supabaseAnonKey) {
+          throw new Error('Supabase is not configured. Please check environment variables.');
+        }
+
+        console.log('📤 Submitting form data:', { name, email, title, phone, consent });
         
         const { data, error: insertError } = await supabase
           .from('thit_registrations')
@@ -54,14 +62,14 @@ export const Proof = () => {
           ])
           .select();
 
-        console.log('Supabase response:', { data, error: insertError });
+        console.log('📥 Supabase response:', { data, error: insertError });
 
         if (insertError) {
-          console.error('Supabase insert error:', insertError);
+          console.error('❌ Supabase insert error:', insertError);
           throw insertError;
         }
 
-        console.log('Form submitted successfully!', data);
+        console.log('✅ Form submitted successfully!', data);
 
         setSubmitted(true);
         // Reset form

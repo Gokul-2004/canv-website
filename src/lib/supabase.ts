@@ -18,7 +18,9 @@ if (!supabaseUrl || !supabaseAnonKey) {
   // Don't throw error - let it fail gracefully so we can see the issue
 }
 
-// Create client only if we have the values
-export const supabase = supabaseUrl && supabaseAnonKey 
-  ? createClient(supabaseUrl, supabaseAnonKey)
-  : null as any; // Will cause error on use, but won't crash on load
+// Create client - use empty strings as fallback to prevent build errors
+// Runtime will handle missing env vars gracefully
+export const supabase = createClient(
+  supabaseUrl || 'https://placeholder.supabase.co',
+  supabaseAnonKey || 'placeholder-key'
+);
