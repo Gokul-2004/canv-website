@@ -5,6 +5,11 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { supabase } from "@/lib/supabase";
 
+// Check if Supabase is configured
+if (!supabase) {
+  console.error('❌ Supabase client not initialized - check environment variables');
+}
+
 const keyTakeaways = [
   "Why not all consent is reversible — and how DPDP changes clinical workflows",
   "How to design informed, defensible consent beyond signatures and forms",
