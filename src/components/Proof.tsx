@@ -39,14 +39,16 @@ export const Proof = () => {
 
       try {
         // Check if Supabase is configured
-        if (!supabase) {
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+        const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+        
+        if (!supabaseUrl || !supabaseAnonKey) {
           throw new Error('Supabase is not configured. Please check environment variables.');
         }
 
         console.log('📤 Submitting form data:', { name, email, title, phone, consent });
         
-        // TypeScript now knows supabase is not null after the check above
-        const { data, error: insertError } = await supabase!
+        const { data, error: insertError } = await supabase
           .from('thit_registrations')
           .insert([
             {
