@@ -25,6 +25,9 @@ export default defineConfig(({ mode }) => ({
         if (warning.code === 'UNRESOLVED_IMPORT') return;
         warn(warning);
       },
+      output: {
+        inlineDynamicImports: false,
+      },
     },
   },
   optimizeDeps: {
@@ -32,5 +35,8 @@ export default defineConfig(({ mode }) => ({
     esbuildOptions: {
       target: 'es2020',
     },
+  },
+  ssr: {
+    noExternal: ['@supabase/supabase-js'],
   },
 }));
