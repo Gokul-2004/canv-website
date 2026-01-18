@@ -19,24 +19,19 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
+    commonjsOptions: {
+      include: [/node_modules/],
+      transformMixedEsModules: true,
+    },
     rollupOptions: {
       onwarn(warning, warn) {
         // Suppress warnings about external modules
         if (warning.code === 'UNRESOLVED_IMPORT') return;
         warn(warning);
       },
-      output: {
-        inlineDynamicImports: false,
-      },
     },
   },
   optimizeDeps: {
     include: ['@supabase/supabase-js'],
-    esbuildOptions: {
-      target: 'es2020',
-    },
-  },
-  ssr: {
-    noExternal: ['@supabase/supabase-js'],
   },
 }));
