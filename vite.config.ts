@@ -25,15 +25,12 @@ export default defineConfig(({ mode }) => ({
         if (warning.code === 'UNRESOLVED_IMPORT') return;
         warn(warning);
       },
-      output: {
-        manualChunks: undefined,
-      },
-    },
-    commonjsOptions: {
-      include: [/node_modules/],
     },
   },
   optimizeDeps: {
     include: ['@supabase/supabase-js'],
+    esbuildOptions: {
+      target: 'es2020',
+    },
   },
 }));
