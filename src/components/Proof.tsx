@@ -154,7 +154,7 @@ export const Proof = () => {
                       className="mt-1 h-4 w-4 rounded border-border text-primary focus:ring-primary"
                     />
                     <label htmlFor="consent" className="text-sm text-muted-foreground leading-relaxed">
-                      I consent to receive personalized information about the DPDP Act and healthcare compliance from Certinal.
+                      I agree to receive communications from Certinal about DPDP and healthcare compliance
                     </label>
                   </div>
                   <Button

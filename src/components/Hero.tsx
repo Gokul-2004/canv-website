@@ -150,7 +150,7 @@ export const Hero = () => {
               </div>
               <div className="flex items-center gap-2">
                 <MapPin size={16} className="text-primary sm:w-[18px] sm:h-[18px]" />
-                <span>Hyderabad</span>
+                <span>HICC, Hyderabad, India</span>
               </div>
             </div>
 
