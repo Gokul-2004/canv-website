@@ -3,7 +3,6 @@ import { useRef, useState } from "react";
 import { BookOpen, CheckCircle2, Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { supabase } from "@/lib/supabase";
 
 // Check if Supabase is configured
 if (!supabase) {
@@ -38,6 +37,9 @@ export const Proof = () => {
       setError(null);
 
       try {
+        // Dynamically import supabase to avoid build issues
+        const { supabase } = await import("@/lib/supabase");
+        
         // Check if Supabase is configured
         const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
         const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
