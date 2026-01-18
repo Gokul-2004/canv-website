@@ -18,4 +18,13 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      onwarn(warning, warn) {
+        // Suppress warnings about external modules
+        if (warning.code === 'UNRESOLVED_IMPORT') return;
+        warn(warning);
+      },
+    },
+  },
 }));
