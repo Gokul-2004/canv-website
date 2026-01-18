@@ -1,8 +1,9 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { BookOpen, CheckCircle2 } from "lucide-react";
+import { BookOpen, CheckCircle2, Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import { supabase } from "@/lib/supabase";
 
 const keyTakeaways = [
   "Why not all consent is reversible — and how DPDP changes clinical workflows",
@@ -22,12 +23,61 @@ export const Proof = () => {
   const [phone, setPhone] = useState("");
   const [consent, setConsent] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (name && email && title && phone && consent) {
-      setSubmitted(true);
-      // Here you would typically send the data to your backend
+      setIsSubmitting(true);
+      setError(null);
+
+      try {
+        console.log('Submitting form data:', { name, email, title, phone, consent });
+        
+        const { data, error: insertError } = await supabase
+          .from('thit_registrations')
+          .insert([
+            {
+              name,
+              email,
+              title,
+              phone,
+              consent,
+              created_at: new Date().toISOString(),
+            },
+          ])
+          .select();
+
+        console.log('Supabase response:', { data, error: insertError });
+
+        if (insertError) {
+          console.error('Supabase insert error:', insertError);
+          throw insertError;
+        }
+
+        console.log('Form submitted successfully!', data);
+
+        setSubmitted(true);
+        // Reset form
+        setName('');
+        setEmail('');
+        setTitle('');
+        setPhone('');
+        setConsent(false);
+      } catch (err: any) {
+        console.error('Error submitting form:', err);
+        // Show more specific error messages
+        if (err?.message?.includes('relation') || err?.message?.includes('does not exist')) {
+          setError('Database table not found. Please contact support.');
+        } else if (err?.message?.includes('Missing Supabase')) {
+          setError('Configuration error. Please contact support.');
+        } else {
+          setError(err?.message || 'Failed to submit. Please try again.');
+        }
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -157,12 +207,23 @@ export const Proof = () => {
                       I agree to receive communications from Certinal about DPDP and healthcare compliance
                     </label>
                   </div>
+                  {error && (
+                    <div className="text-sm text-red-500 mb-2">{error}</div>
+                  )}
                   <Button
                     type="submit"
                     size="lg"
-                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-full"
+                    disabled={isSubmitting}
+                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-full disabled:opacity-50"
                   >
-                    Get My Copy at the Booth
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Submitting...
+                      </>
+                    ) : (
+                      'Get My Copy at the Booth'
+                    )}
                   </Button>
                 </form>
               ) : (
