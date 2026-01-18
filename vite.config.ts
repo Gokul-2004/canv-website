@@ -19,11 +19,17 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
+    target: 'esnext',
     commonjsOptions: {
       include: [/node_modules/],
       transformMixedEsModules: true,
     },
     rollupOptions: {
+      output: {
+        manualChunks: {
+          supabase: ['@supabase/supabase-js'],
+        },
+      },
       onwarn(warning, warn) {
         // Suppress warnings about external modules
         if (warning.code === 'UNRESOLVED_IMPORT') return;
@@ -32,6 +38,9 @@ export default defineConfig(({ mode }) => ({
     },
   },
   optimizeDeps: {
-    include: ['@supabase/supabase-js'],
+    include: ['@supabase/supabase-js', '@supabase/gotrue-js', '@supabase/postgrest-js', '@supabase/realtime-js', '@supabase/storage-js', '@supabase/functions-js'],
+    esbuildOptions: {
+      target: 'esnext',
+    },
   },
 }));
