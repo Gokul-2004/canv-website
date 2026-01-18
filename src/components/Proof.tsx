@@ -45,7 +45,8 @@ export const Proof = () => {
 
         console.log('📤 Submitting form data:', { name, email, title, phone, consent });
         
-        const { data, error: insertError } = await supabase
+        // TypeScript now knows supabase is not null after the check above
+        const { data, error: insertError } = await supabase!
           .from('thit_registrations')
           .insert([
             {
