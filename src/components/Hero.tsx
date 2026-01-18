@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Calendar, MapPin, Users, Lightbulb, Stethoscope, ChevronDown, Award } from "lucide-react";
+import { Calendar, MapPin, Users, Lightbulb, Stethoscope, ChevronDown } from "lucide-react";
 import { Button } from "./ui/button";
 
 const CountdownTimer = () => {
@@ -41,24 +41,24 @@ const CountdownTimer = () => {
   ];
 
   return (
-    <div className="flex gap-3 md:gap-4">
+    <div className="flex gap-2 sm:gap-3 md:gap-4">
       {timeUnits.map((unit, index) => (
         <motion.div
           key={unit.label}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 + index * 0.1 }}
-          className="glass-dark rounded-xl p-3 md:p-4 min-w-[70px] md:min-w-[80px] text-center"
+          className="glass-card rounded-xl p-2 sm:p-3 md:p-4 min-w-[55px] sm:min-w-[70px] md:min-w-[80px] text-center"
         >
           <motion.span
             key={unit.value}
             initial={{ scale: 1.2 }}
             animate={{ scale: 1 }}
-            className="block text-2xl md:text-3xl font-bold text-primary-foreground"
+            className="block text-lg sm:text-2xl md:text-3xl font-bold text-foreground"
           >
             {String(unit.value).padStart(2, "0")}
           </motion.span>
-          <span className="text-xs md:text-sm text-primary-foreground/60 uppercase tracking-wider">
+          <span className="text-xs md:text-sm text-muted-foreground uppercase tracking-wider">
             {unit.label}
           </span>
         </motion.div>
@@ -96,58 +96,70 @@ export const Hero = () => {
         />
       </div>
 
-      <div className="container-tight relative z-10 pt-32 pb-20 md:pt-40 md:pb-24 flex-1 flex flex-col justify-center">
+      <div className="container-tight relative z-10 pt-24 pb-20 md:pt-28 md:pb-24 flex-1 flex flex-col justify-center">
         <div className="max-w-4xl mx-auto text-center">
           {/* Sponsor Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 glass-dark rounded-full px-4 py-2 mb-8"
+            transition={{ duration: 0.5 }}
+            className="mb-6"
           >
-            <Award className="w-4 h-4 text-primary" />
-            <span className="inline-flex items-center rounded-full bg-gradient-to-r from-slate-100 to-cyan-200 px-3 py-[3px] text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-slate-900">
+            <span className="inline-flex items-center rounded-full bg-gradient-to-r from-slate-100 to-cyan-200 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-slate-900">
               Platinum Sponsor & Keynote Partner
             </span>
           </motion.div>
 
-          {/* Main Headline */}
+          {/* Main Title */}
           <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-foreground mb-4"
+          >
+            Certinal at Apollo THIT 2026
+          </motion.h1>
+
+          {/* Main Headline */}
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl md:text-5xl lg:text-7xl font-bold text-primary-foreground leading-tight mb-6"
+            className="mb-8"
           >
-            CERTINAL&apos;S{" "}
-            <span className="gradient-text">HEALTHCARE</span>{" "}
-            CONSENT &amp; COMPLIANCE{" "}
-            <span className="gradient-text">PLATFORM</span>
-          </motion.h1>
+            <p className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground leading-[1.1]">
+              CERTINAL'S <span className="gradient-text">HEALTHCARE</span>
+            </p>
+            <p className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground leading-[1.1]">
+              CONSENT & COMPLIANCE <span className="gradient-text">PLATFORM</span>
+            </p>
+          </motion.div>
 
-          {/* Subheadline */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-xl md:text-2xl text-primary font-semibold mb-4"
-          >
-            Certinal at THIT 2026
-          </motion.p>
-
-          {/* Event Details */}
+          {/* Event Info Row - Left: Event Details, Right: Countdown */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="flex items-center justify-center gap-6 text-primary-foreground/70 mb-8"
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16 mb-8"
           >
-            <div className="flex items-center gap-2">
-              <Calendar size={18} className="text-primary" />
-              <span>January 30–31, 2026</span>
+            {/* Left - Event Details */}
+            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-foreground/70 text-sm sm:text-base">
+              <div className="flex items-center gap-2">
+                <Calendar size={16} className="text-primary sm:w-[18px] sm:h-[18px]" />
+                <span>January 30–31, 2026</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <MapPin size={16} className="text-primary sm:w-[18px] sm:h-[18px]" />
+                <span>Hyderabad</span>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <MapPin size={18} className="text-primary" />
-              <span>Hyderabad</span>
+
+            {/* Right - Countdown Timer */}
+            <div className="flex flex-col items-center">
+              <p className="text-foreground/60 mb-3 text-sm uppercase tracking-wider">
+                Event starts in
+              </p>
+              <CountdownTimer />
             </div>
           </motion.div>
 
@@ -156,11 +168,9 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="text-lg text-primary-foreground/60 max-w-3xl mx-auto mb-10 leading-relaxed"
+            className="text-sm sm:text-base md:text-lg text-foreground/60 max-w-3xl mx-auto mb-10 leading-relaxed px-2 sm:px-0"
           >
-            As healthcare goes digital, trust, consent, and data rights define care quality. 
-            Certinal helps healthcare leaders orchestrate and operationalize consent, 
-            compliance, and governance at scale.
+            At Apollo THIT – Transforming Healthcare with IT 2026, Certinal leads the conversation on consent, compliance, and governance in the DPDP era.
           </motion.p>
 
           {/* Stats */}
@@ -168,7 +178,7 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.7 }}
-            className="flex items-center justify-center gap-8 md:gap-16 mb-10"
+            className="flex items-center justify-center gap-6 sm:gap-8 md:gap-16 mb-10"
           >
             {stats.map((stat, index) => (
               <motion.div
@@ -178,11 +188,11 @@ export const Hero = () => {
                 transition={{ delay: 0.8 + index * 0.1 }}
                 className="text-center"
               >
-                <stat.icon className="w-6 h-6 text-primary mx-auto mb-2" />
-                <div className="text-2xl md:text-3xl font-bold text-primary-foreground">
+                <stat.icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary mx-auto mb-2" />
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
                   {stat.value}
                 </div>
-                <div className="text-sm text-primary-foreground/60">{stat.label}</div>
+                <div className="text-xs sm:text-sm text-foreground/60">{stat.label}</div>
               </motion.div>
             ))}
           </motion.div>
@@ -192,12 +202,12 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.9 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-12 px-4 sm:px-0"
           >
             <Button
               asChild
               size="lg"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 py-6 text-lg animate-pulse-glow"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg animate-pulse-glow w-full sm:w-auto"
             >
               <motion.a
                 href="#booth"
@@ -211,7 +221,7 @@ export const Hero = () => {
               asChild
               variant="outline"
               size="lg"
-              className="border-primary/40 text-primary hover:bg-primary/10 hover:text-primary-foreground rounded-full px-8 py-6 text-lg"
+              className="border-primary/40 text-primary hover:bg-primary/10 hover:text-foreground rounded-full px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg w-full sm:w-auto"
             >
               <motion.a
                 href="https://www.certinal.com/request-a-demo"
@@ -223,19 +233,6 @@ export const Hero = () => {
                 Book a Demo
               </motion.a>
             </Button>
-          </motion.div>
-
-          {/* Countdown Timer */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1 }}
-            className="flex flex-col items-center"
-          >
-            <p className="text-primary-foreground/60 mb-4 text-sm uppercase tracking-wider">
-              Event starts in
-            </p>
-            <CountdownTimer />
           </motion.div>
         </div>
       </div>
@@ -250,7 +247,7 @@ export const Hero = () => {
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="flex flex-col items-center gap-2 text-primary-foreground/40"
+          className="flex flex-col items-center gap-2 text-foreground/40"
         >
           <span className="text-xs uppercase tracking-widest">Scroll</span>
           <ChevronDown className="w-5 h-5" />

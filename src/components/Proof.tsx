@@ -1,179 +1,210 @@
-import { motion, useInView, AnimatePresence } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
-import { Quote, Shield, Award, Lock } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import { useRef, useState } from "react";
+import { BookOpen, CheckCircle2 } from "lucide-react";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 
-const institutions = [
-  { name: "Monash Health", logo: "M" },
-  { name: "Bumrungrad International Hospital", logo: "B" },
-  { name: "Apollo Hospitals", logo: "A" },
-];
-
-const badges = [
-  { icon: Shield, label: "Enterprise-grade security" },
-  { icon: Award, label: "Healthcare-ready compliance" },
-  { icon: Lock, label: "Built for scale" },
-];
-
-const testimonials = [
-  {
-    quote: "Contracts signed digitally through the Certinal platform are simple, easy and traceable. We know where it is and we can push people to sign if they haven't done it. This has been quite a game changer for our organization.",
-    name: "Neil Sigamoney",
-    title: "Director Engineering & Corporate Services, At Monash Health",
-    initials: "NS",
-  },
-  {
-    quote: "Integrating Certinal eSign technology aligns with Bumrungrad's commitment to create seamless, secure, and patient-centered experiences through advanced solutions. By digitizing our workflows, we simplify the registration process, reduce wait times, and enhance overall patient satisfaction—all core to our mission of delivering world-class healthcare.",
-    name: "Nipat Kulabkaw",
-    title: "MD, Co-Chief Executive Officer, At Bumrungrad International Hospital",
-    initials: "NK",
-  },
-  {
-    quote: "Implementing Certinal eSign's digital solutions has significantly streamlined and secured our consent processes. Integration with our EMR system optimizes operations and data management, further supporting Bumrungrad's commitment to innovative healthcare and patient-centric care delivery.",
-    name: "Henrik Andersson",
-    title: "CEO, Chief Innovation & Technology Officer of Bumrungrad International Hospital",
-    initials: "HA",
-  },
+const keyTakeaways = [
+  "Why not all consent is reversible — and how DPDP changes clinical workflows",
+  "How to design informed, defensible consent beyond signatures and forms",
+  "Where DPDP conflicts with healthcare realities — and how to navigate them",
+  'What "audit-ready" truly means in hospitals and health systems',
+  "How governance, technology, and accountability intersect in patient data",
+  "A framework to move from checkbox compliance to system-level orchestration",
 ];
 
 export const Proof = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: false, margin: "-20%" });
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [title, setTitle] = useState("");
+  const [phone, setPhone] = useState("");
+  const [consent, setConsent] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 6000); // Auto-rotate every 6 seconds
-    return () => clearInterval(interval);
-  }, []);
-  
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (name && email && title && phone && consent) {
+      setSubmitted(true);
+      // Here you would typically send the data to your backend
+    }
+  };
+
   return (
-    <motion.div 
+    <motion.div
       ref={sectionRef}
+      id="book"
       className="min-h-screen bg-background relative overflow-hidden flex items-center"
     >
       {/* Background decoration */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
       <div className="container-tight py-16 md:py-20">
+        {/* Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-8"
+        >
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold bg-primary/10 text-primary border border-primary/20">
+            <BookOpen className="w-4 h-4" />
+            THIT Exclusive Book Release
+          </span>
+        </motion.div>
+
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
           transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="text-center mb-16"
+          className="text-center max-w-4xl mx-auto mb-12"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            Trusted by{" "}
-            <span className="gradient-text">Leading Healthcare Institutions</span>
+            When the <span className="gradient-text">CIO Holds the Scalpel</span>
           </h2>
+          <p className="text-lg text-muted-foreground leading-relaxed mb-4">
+            As India's Digital Personal Data Protection (DPDP) Act reshapes how organizations handle personal data, healthcare faces a challenge unlike any other.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            This book is a practical field guide for healthcare leaders navigating the collision between data protection laws, clinical realities, and institutional accountability.
+          </p>
         </motion.div>
 
-        {/* Institutions */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="flex flex-wrap items-center justify-center gap-8 md:gap-16 mb-16"
-        >
-          {institutions.map((inst, index) => (
-            <motion.div
-              key={inst.name}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-              whileHover={{ scale: 1.05 }}
-              className="flex items-center gap-3"
-            >
-              <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center">
-                <span className="text-xl font-bold text-foreground">{inst.logo}</span>
-              </div>
-              <span className="text-lg font-medium text-muted-foreground hidden sm:block">
-                {inst.name}
-              </span>
-            </motion.div>
-          ))}
-        </motion.div>
+        <div className="grid lg:grid-cols-2 gap-10 md:gap-16 max-w-5xl mx-auto">
+          {/* Form - comes first on mobile */}
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="order-1 lg:order-2"
+          >
+            <div className="glass-card rounded-2xl p-8 md:p-10">
+              <h3 className="text-xl font-bold text-foreground mb-2">Get Access to the Book</h3>
+              <p className="text-muted-foreground text-sm mb-6">
+                Enter your details to reserve your copy at the booth.
+              </p>
 
-        {/* Badges */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-wrap items-center justify-center gap-4 md:gap-8 mb-16"
-        >
-          {badges.map((badge, index) => (
-            <motion.div
-              key={badge.label}
-              initial={{ opacity: 0, x: -20 }}
-              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-              transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
-              whileHover={{ scale: 1.05 }}
-              className="flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card"
-            >
-              <badge.icon className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-foreground">{badge.label}</span>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Testimonial Slider */}
-        <motion.div
-          initial={{ opacity: 0, y: 60, scale: 0.95 }}
-          animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 60, scale: 0.95 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="max-w-4xl mx-auto relative"
-        >
-          <div className="glass-card rounded-2xl p-8 md:p-12 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-accent to-primary" />
-
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentTestimonial}
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                transition={{ duration: 0.5 }}
-              >
-                <Quote className="w-10 h-10 text-primary/30 mb-6" />
-                
-                <blockquote className="text-xl md:text-2xl text-foreground font-medium leading-relaxed mb-8 italic px-2">
-                  "{testimonials[currentTestimonial].quote}"
-                </blockquote>
-                
-                <div className="flex items-center gap-4">
-                  <motion.div 
-                    className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center"
-                    whileHover={{ scale: 1.1 }}
-                  >
-                    <span className="text-primary font-bold">{testimonials[currentTestimonial].initials}</span>
-                  </motion.div>
+              {!submitted ? (
+                <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <p className="font-bold text-foreground">{testimonials[currentTestimonial].name}</p>
-                    <p className="text-muted-foreground text-sm">
-                      {testimonials[currentTestimonial].title}
-                    </p>
+                    <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
+                      Name
+                    </label>
+                    <Input
+                      id="name"
+                      type="text"
+                      placeholder="Your full name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required
+                      className="w-full"
+                    />
                   </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Dots Indicator */}
-            <div className="flex items-center justify-center gap-2 mt-8">
-              {testimonials.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentTestimonial(index)}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    index === currentTestimonial
-                      ? "bg-primary w-8"
-                      : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
-                  }`}
-                  aria-label={`Go to testimonial ${index + 1}`}
-                />
-              ))}
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+                      Work Email
+                    </label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="you@company.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className="w-full"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="title" className="block text-sm font-medium text-foreground mb-2">
+                      Title
+                    </label>
+                    <Input
+                      id="title"
+                      type="text"
+                      placeholder="e.g. CIO, CISO, Hospital Administrator"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                      required
+                      className="w-full"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
+                      Phone Number
+                    </label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder="+91 98765 43210"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      required
+                      className="w-full"
+                    />
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <input
+                      id="consent"
+                      type="checkbox"
+                      checked={consent}
+                      onChange={(e) => setConsent(e.target.checked)}
+                      required
+                      className="mt-1 h-4 w-4 rounded border-border text-primary focus:ring-primary"
+                    />
+                    <label htmlFor="consent" className="text-sm text-muted-foreground leading-relaxed">
+                      I consent to receive personalized information about the DPDP Act and healthcare compliance from Certinal.
+                    </label>
+                  </div>
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-full"
+                  >
+                    Get My Copy at the Booth
+                  </Button>
+                </form>
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="text-center py-6"
+                >
+                  <CheckCircle2 className="w-12 h-12 text-primary mx-auto mb-4" />
+                  <h4 className="text-lg font-bold text-foreground mb-2">You're on the list!</h4>
+                  <p className="text-muted-foreground text-sm">
+                    Visit Booth #121 at THIT 2026 to collect your copy.
+                  </p>
+                </motion.div>
+              )}
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+
+          {/* Key Takeaways - comes second on mobile */}
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="order-2 lg:order-1"
+          >
+            <h3 className="text-xl font-bold text-foreground mb-6">Key Takeaways</h3>
+            <ul className="space-y-4">
+              {keyTakeaways.map((takeaway, index) => (
+                <motion.li
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                  transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+                  className="flex items-start gap-3"
+                >
+                  <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <span className="text-muted-foreground leading-relaxed">{takeaway}</span>
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
+        </div>
       </div>
     </motion.div>
   );

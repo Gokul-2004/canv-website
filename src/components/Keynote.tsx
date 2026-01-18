@@ -134,10 +134,10 @@ const SpeakerCard = ({
             <User className="w-8 h-8 text-primary" />
           </motion.div>
           <div>
-            <h4 className="text-lg font-bold text-foreground">{speaker.name}</h4>
+            <h4 className="text-lg font-bold text-[#131720]">{speaker.name}</h4>
             <p className="text-primary text-sm font-medium">{speaker.title}</p>
-            <p className="text-muted-foreground text-sm mb-3">{speaker.organization}</p>
-            <p className="text-sm text-muted-foreground leading-relaxed">{speaker.bio}</p>
+            <p className="text-[#131720]/60 text-sm mb-3">{speaker.organization}</p>
+            <p className="text-sm text-[#131720]/60 leading-relaxed">{speaker.bio}</p>
           </div>
         </div>
       </div>
@@ -157,10 +157,11 @@ export const Keynote = () => {
   const backgroundX = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
 
   return (
-    <div 
+    <div
       ref={sectionRef}
-      id="keynote" 
-      className="min-h-screen hero-gradient relative overflow-hidden flex items-center"
+      id="keynote"
+      className="min-h-screen relative overflow-hidden flex items-center"
+      style={{ backgroundColor: '#E6FAEB' }}
     >
       {/* Background elements with parallax */}
       <motion.div 
@@ -186,15 +187,15 @@ export const Keynote = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="inline-flex items-center gap-2 glass-dark rounded-full px-4 py-2 mb-6"
+            className="inline-flex items-center gap-2 glass-card rounded-full px-4 py-2 mb-6"
           >
             <span className="w-2 h-2 bg-primary rounded-full" />
-            <span className="text-sm font-medium text-primary-foreground/90">
+            <span className="text-sm font-medium text-[#131720]/90">
               Certinal Keynote at THIT 2026
             </span>
           </motion.div>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-6 max-w-4xl mx-auto leading-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#131720] mb-6 max-w-4xl mx-auto leading-tight">
             Unifying Consent:{" "}
             <span className="gradient-text">The Last Broken Step</span> in Digital Care
           </h2>
@@ -206,9 +207,9 @@ export const Keynote = () => {
             initial={{ opacity: 0, x: -60, scale: 0.95 }}
             animate={isInView ? { opacity: 1, x: 0, scale: 1 } : { opacity: 0, x: -60, scale: 0.95 }}
             transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="glass-dark rounded-2xl p-8 h-full flex flex-col"
+            className="glass-card rounded-2xl p-8 h-full flex flex-col"
           >
-            <h3 className="text-xl font-bold text-primary-foreground mb-6">
+            <h3 className="text-xl font-bold text-[#131720] mb-6">
               What Attendees Will Learn
             </h3>
             <div className="space-y-4 flex-1">
@@ -221,7 +222,7 @@ export const Keynote = () => {
                   className="flex items-start gap-3"
                 >
                   <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                  <p className="text-primary-foreground/80">{item}</p>
+                  <p className="text-[#131720]/80">{item}</p>
                 </motion.div>
               ))}
             </div>
@@ -286,7 +287,7 @@ export const Keynote = () => {
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : { opacity: 0 }}
               transition={{ duration: 0.5 }}
-              className="text-xl font-bold text-primary-foreground mb-6"
+              className="text-xl font-bold text-[#131720] mb-6"
             >
               Featured Speakers
             </motion.h3>

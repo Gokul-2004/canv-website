@@ -1,22 +1,18 @@
-# Welcome to your Lovable project
+# Certinal-Apollo THIT Website
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+**GitHub Repository**: [https://github.com/Gokul-2004/canv-website](https://github.com/Gokul-2004/canv-website)
+
+**Live Deployment**: [https://canv-website.vercel.app](https://canv-website.vercel.app)
 
 ## How can I edit this code?
 
 There are several ways of editing your application.
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
 **Use your preferred IDE**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will automatically deploy to Vercel.
 
 The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
@@ -24,10 +20,10 @@ Follow these steps:
 
 ```sh
 # Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+git clone https://github.com/Gokul-2004/canv-website.git
 
 # Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+cd canv-website
 
 # Step 3: Install the necessary dependencies.
 npm i
@@ -62,12 +58,16 @@ This project is built with:
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+This project is automatically deployed to **Vercel** when you push changes to the main branch.
 
-## Can I connect a custom domain to my Lovable project?
+The deployment URL is: [https://canv-website.vercel.app](https://canv-website.vercel.app)
+
+To deploy manually or configure deployment settings, visit the [Vercel Dashboard](https://vercel.com/dashboard).
+
+## Can I connect a custom domain to my Vercel project?
 
 Yes, you can!
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+To connect a domain, navigate to your project settings in Vercel Dashboard > Settings > Domains and click Add Domain.
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Read more here: [Vercel Custom Domains](https://vercel.com/docs/concepts/projects/domains)

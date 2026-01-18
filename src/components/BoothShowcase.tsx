@@ -1,34 +1,38 @@
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { FileCheck, Shield, Settings, ArrowRight, Maximize2 } from "lucide-react";
+import { Maximize2, ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 import layoutImage from "../../Layout.jpg";
 
 const products = [
   {
-    icon: FileCheck,
     name: "ConsentFlow",
-    subtitle: "Consent Lifecycle Management",
-    description:
-      "Purpose-wise, multilingual clinical and privacy consent with complete lifecycle traceability and withdrawal control.",
+    title: "Purpose-wise, multilingual consent.",
+    subtitle: "Managed across its full lifecycle.",
+    description: "Built for intake, treatment, and digital touchpoints.",
     color: "from-primary/20 to-primary/5",
   },
   {
-    icon: Shield,
-    name: "ConsentRights",
-    subtitle: "Data Principal Rights Management",
-    description:
-      "Self-service rights execution with unified identity mapping and governed data processing across systems.",
+    name: "eSignature",
+    title: "Legally enforceable digital execution.",
+    subtitle: "Court-admissible. Tamper-evident.",
+    description: "Because consent without evidence is still a risk.",
     color: "from-accent/20 to-accent/5",
   },
   {
-    icon: Settings,
-    name: "ConsentGovern",
-    subtitle: "Compliance & Governance Layer",
-    description:
-      "Regulator-ready audits, breach response workflows, and third-party consent governance—built in, not bolted on.",
+    name: "ConsentRights",
+    title: "ABHA-linked identity resolution.",
+    subtitle: "Patient rights and grievances handled correctly.",
+    description: "Designed for DPDP-scale operations.",
     color: "from-primary/20 to-accent/5",
+  },
+  {
+    name: "ConsentGovern",
+    title: "Audit readiness and breach response.",
+    subtitle: "Third-party consent and DPA governance.",
+    description: "Built for regulatory confidence.",
+    color: "from-accent/20 to-primary/5",
   },
 ];
 
@@ -56,27 +60,11 @@ const ProductCard = ({
       style={{ perspective: "1000px" }}
     >
       <div className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${product.color} p-[1px] h-full`}>
-        <div className="glass-card rounded-2xl p-8 h-full flex flex-col transition-all duration-500 group-hover:shadow-xl">
-          <motion.div
-            whileHover={{ scale: 1.1, rotate: -5 }}
-            className="w-14 h-14 rounded-xl bg-primary flex items-center justify-center mb-6"
-          >
-            <product.icon className="w-7 h-7 text-primary-foreground" />
-          </motion.div>
-          
-          <h3 className="text-2xl font-bold text-foreground mb-1">{product.name}</h3>
-          <p className="text-primary font-medium text-sm mb-4">{product.subtitle}</p>
-          <p className="text-muted-foreground leading-relaxed flex-grow">{product.description}</p>
-
-          <motion.div
-            initial={{ x: -10, opacity: 0 }}
-            animate={isInView ? { x: 0, opacity: 1 } : { x: -10, opacity: 0 }}
-            transition={{ delay: 0.3 + index * 0.1 }}
-            className="mt-6 flex items-center gap-2 text-primary font-medium group-hover:gap-4 transition-all"
-          >
-            <span className="text-sm">Learn more</span>
-            <ArrowRight className="w-4 h-4" />
-          </motion.div>
+        <div className="glass-card rounded-2xl p-6 md:p-8 h-full flex flex-col transition-all duration-500 group-hover:shadow-xl">
+          <h3 className="text-xl md:text-2xl font-bold text-foreground mb-3">{product.name}</h3>
+          <p className="text-foreground font-medium mb-1">{product.title}</p>
+          <p className="text-muted-foreground text-sm mb-4">{product.subtitle}</p>
+          <p className="text-muted-foreground/80 text-sm italic">{product.description}</p>
         </div>
       </div>
     </motion.div>
@@ -121,7 +109,7 @@ export const BoothShowcase = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-16 items-stretch">
+        <div className="grid sm:grid-cols-2 gap-6 md:gap-8 mb-16 items-stretch max-w-4xl mx-auto">
           {products.map((product, index) => (
             <ProductCard key={product.name} product={product} index={index} />
           ))}

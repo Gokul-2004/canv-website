@@ -7,7 +7,6 @@ import Keynote from "@/components/Keynote";
 import BoothShowcase from "@/components/BoothShowcase";
 import WhoShouldVisit from "@/components/WhoShouldVisit";
 import Proof from "@/components/Proof";
-import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -61,10 +60,6 @@ const Index = () => {
           
           <section className="snap-section">
             <Proof />
-          </section>
-          
-          <section className="snap-section-auto">
-            <FinalCTA />
           </section>
           
           <section className="snap-section-auto">

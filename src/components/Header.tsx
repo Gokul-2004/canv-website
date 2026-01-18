@@ -5,9 +5,10 @@ import { Button } from "./ui/button";
 import certinalLogo from "../../certinal_logo.svg";
 
 const navLinks = [
-  { name: "Why Certinal", href: "#why-certinal" },
+  { name: "Why It Matters", href: "#why-certinal" },
   { name: "Keynote", href: "#keynote" },
   { name: "Booth", href: "#booth" },
+  { name: "Book", href: "#book" },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -86,7 +87,7 @@ export const Header = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-primary-foreground p-2"
+            className="md:hidden text-foreground p-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
