@@ -39,10 +39,7 @@ export const Proof = () => {
 
       try {
         // Check if Supabase is configured
-        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-        const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-        
-        if (!supabaseUrl || !supabaseAnonKey) {
+        if (!supabase) {
           throw new Error('Supabase is not configured. Please check environment variables.');
         }
 

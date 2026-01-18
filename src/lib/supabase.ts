@@ -1,26 +1,28 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-// Debug logging
-console.log('🔍 Supabase Environment Check:', {
-  url: supabaseUrl ? `✅ Set (${supabaseUrl.substring(0, 30)}...)` : '❌ Missing',
-  key: supabaseAnonKey ? `✅ Set (${supabaseAnonKey.substring(0, 20)}...)` : '❌ Missing',
-  allEnvVars: Object.keys(import.meta.env).filter(k => k.startsWith('VITE_')),
-});
+// Create client only if we have both values
+let supabase: SupabaseClient | null = null;
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('❌ Missing Supabase environment variables:', {
-    url: supabaseUrl,
-    key: supabaseAnonKey ? 'Present' : 'Missing',
-  });
-  // Don't throw error - let it fail gracefully so we can see the issue
+if (supabaseUrl && supabaseAnonKey) {
+  supabase = createClient(supabaseUrl, supabaseAnonKey);
+  
+  // Debug logging (only in browser, not during build)
+  if (typeof window !== 'undefined') {
+    console.log('🔍 Supabase Environment Check:', {
+      url: `✅ Set (${supabaseUrl.substring(0, 30)}...)`,
+      key: `✅ Set (${supabaseAnonKey.substring(0, 20)}...)`,
+    });
+  }
+} else {
+  if (typeof window !== 'undefined') {
+    console.error('❌ Missing Supabase environment variables:', {
+      url: supabaseUrl ? 'Present' : 'Missing',
+      key: supabaseAnonKey ? 'Present' : 'Missing',
+    });
+  }
 }
 
-// Create client - use empty strings as fallback to prevent build errors
-// Runtime will handle missing env vars gracefully
-export const supabase = createClient(
-  supabaseUrl || 'https://placeholder.supabase.co',
-  supabaseAnonKey || 'placeholder-key'
-);
+export { supabase };
