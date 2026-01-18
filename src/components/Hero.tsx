@@ -115,7 +115,7 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-foreground mb-4"
+            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4"
           >
             Certinal at Apollo THIT 2026
           </motion.h1>
@@ -143,7 +143,7 @@ export const Hero = () => {
             className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16 mb-8"
           >
             {/* Left - Event Details */}
-            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-foreground/70 text-sm sm:text-base">
+            <div className="flex items-center justify-center gap-4 sm:gap-6 text-foreground/70 text-sm sm:text-base">
               <div className="flex items-center gap-2">
                 <Calendar size={16} className="text-primary sm:w-[18px] sm:h-[18px]" />
                 <span>January 30–31, 2026</span>
