@@ -28,7 +28,7 @@ export const Proof = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (name && email && title && phone && consent) {
+    if (name && email && title && consent) {
       setIsSubmitting(true);
       setError(null);
 
@@ -50,7 +50,7 @@ export const Proof = () => {
               name,
               email,
               title,
-              phone,
+              phone: phone || null,
               consent,
               created_at: new Date().toISOString(),
             },
@@ -190,7 +190,7 @@ export const Proof = () => {
                   </div>
                   <div>
                     <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
-                      Phone Number
+                      Phone Number <span className="text-muted-foreground font-normal">(Optional)</span>
                     </label>
                     <Input
                       id="phone"
@@ -198,7 +198,6 @@ export const Proof = () => {
                       placeholder="+91 98765 43210"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      required
                       className="w-full"
                     />
                   </div>
