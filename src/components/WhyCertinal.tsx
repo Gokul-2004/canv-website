@@ -1,5 +1,12 @@
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { Users, Lightbulb, Stethoscope } from "lucide-react";
+
+const stats = [
+  { icon: Users, value: "7000+", label: "Delegates" },
+  { icon: Lightbulb, value: "200+", label: "Innovators" },
+  { icon: Stethoscope, value: "150+", label: "Doctors" },
+];
 
 const regulations = [
   {
@@ -117,6 +124,30 @@ export const WhyCertinal = () => {
             India's healthcare landscape is governed by multiple mandates.{" "}
             <span className="text-foreground font-medium">Each one touches consent differently.</span>
           </p>
+        </motion.div>
+
+        {/* Stats */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="flex items-center justify-center gap-8 sm:gap-12 md:gap-20 mb-12"
+        >
+          {stats.map((stat, index) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+              transition={{ delay: 0.4 + index * 0.1 }}
+              className="text-center"
+            >
+              <stat.icon className="w-6 h-6 text-primary mx-auto mb-2" />
+              <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
+                {stat.value}
+              </div>
+              <div className="text-sm text-muted-foreground">{stat.label}</div>
+            </motion.div>
+          ))}
         </motion.div>
 
         {/* Regulations Grid */}
