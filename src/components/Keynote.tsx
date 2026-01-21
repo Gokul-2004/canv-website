@@ -17,22 +17,22 @@ const learnings = [
 
 const speakers = [
   {
-    name: "Dr. Rajesh Kumar",
-    title: "Chief Medical Information Officer",
-    organization: "Apollo Hospitals",
-    bio: "20+ years in healthcare IT transformation, leading digital health initiatives across 70+ hospitals.",
+    name: "Mr. Ashokkan Somuveerappan",
+    title: "Panel Chair",
+    organization: "CIO, Apollo Hospitals",
+    bio: "Leading digital transformation and IT strategy across Apollo Hospitals network.",
   },
   {
-    name: "Priya Sharma",
-    title: "VP of Product & Engineering",
-    organization: "Certinal",
-    bio: "Former Google Health engineer, pioneering consent infrastructure for enterprise healthcare systems.",
+    name: "Ms. Shahana Chatterji",
+    title: "Partner",
+    organization: "Shardul Amarchand Mangaldas & Co.",
+    bio: "Expert in healthcare law, data privacy regulations, and corporate legal advisory.",
   },
   {
-    name: "Dr. Michael Chen",
-    title: "Director of Digital Compliance",
-    organization: "Bumrungrad International Hospital",
-    bio: "Expert in APAC healthcare regulations and cross-border patient data governance.",
+    name: "Mr. Lalit Kalra",
+    title: "Partner, Cybersecurity & National Leader – Data Privacy",
+    organization: "EY India",
+    bio: "Leading cybersecurity and data privacy practice, advising enterprises on DPDP compliance.",
   },
 ];
 
