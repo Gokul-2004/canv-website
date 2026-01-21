@@ -1,6 +1,6 @@
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { CalendarPlus, CheckCircle, User, Download } from "lucide-react";
+import { CalendarPlus, CheckCircle, Download } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -126,20 +126,10 @@ const SpeakerCard = ({
       className="group"
     >
       <div className="glass-card rounded-2xl p-6 h-full transition-all duration-500 hover:shadow-xl">
-        <div className="flex items-start gap-4">
-          <motion.div
-            whileHover={{ scale: 1.1 }}
-            className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0"
-          >
-            <User className="w-8 h-8 text-primary" />
-          </motion.div>
-          <div>
-            <h4 className="text-lg font-bold text-[#131720]">{speaker.name}</h4>
-            <p className="text-primary text-sm font-medium">{speaker.title}</p>
-            <p className="text-[#131720]/60 text-sm mb-3">{speaker.organization}</p>
-            <p className="text-sm text-[#131720]/60 leading-relaxed">{speaker.bio}</p>
-          </div>
-        </div>
+        <h4 className="text-lg font-bold text-[#131720]">{speaker.name}</h4>
+        <p className="text-primary text-sm font-medium">{speaker.title}</p>
+        <p className="text-[#131720]/60 text-sm mb-3">{speaker.organization}</p>
+        <p className="text-sm text-[#131720]/60 leading-relaxed">{speaker.bio}</p>
       </div>
     </motion.div>
   );
