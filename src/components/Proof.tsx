@@ -17,6 +17,17 @@ export const Proof = () => {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [tokenCode, setTokenCode] = useState<string>("");
+
+  // Generate alphanumeric code
+  const generateAlphanumericCode = () => {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let code = '';
+    for (let i = 0; i < 6; i++) {
+      code += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return code;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,8 +44,9 @@ export const Proof = () => {
           throw new Error('Supabase is not configured. Please check environment variables.');
         }
 
-        console.log('📤 Submitting form data:', { name, email, title, phone, consent });
-        
+        const code = generateAlphanumericCode();
+        console.log('📤 Submitting form data:', { name, email, title, phone, consent, token_number: code });
+
         const { data, error: insertError } = await supabase
           .from('thit_registrations')
           .insert([
@@ -44,6 +56,7 @@ export const Proof = () => {
               title: title || null,
               phone: phone || null,
               consent,
+              token_number: code,
               created_at: new Date().toISOString(),
             },
           ])
@@ -58,6 +71,7 @@ export const Proof = () => {
 
         console.log('✅ Form submitted successfully!', data);
 
+        setTokenCode(code);
         setSubmitted(true);
         // Reset form
         setName('');
@@ -128,10 +142,14 @@ export const Proof = () => {
             className="order-1 lg:order-2"
           >
             <div className="glass-card rounded-2xl p-8 md:p-10">
-              <h3 className="text-xl font-bold text-foreground mb-2">Get Access to the Book</h3>
-              <p className="text-muted-foreground text-sm mb-6">
-                Enter your details to reserve your copy at the booth.
-              </p>
+              {!submitted && (
+                <>
+                  <h3 className="text-xl font-bold text-foreground mb-2">Get Access to the Book</h3>
+                  <p className="text-muted-foreground text-sm mb-6">
+                    Enter your details to reserve your copy at the booth.
+                  </p>
+                </>
+              )}
 
               {!submitted ? (
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -229,8 +247,12 @@ export const Proof = () => {
                 >
                   <CheckCircle2 className="w-12 h-12 text-primary mx-auto mb-4" />
                   <h4 className="text-lg font-bold text-foreground mb-2">You're on the list!</h4>
+                  <div className="bg-primary/10 border border-primary/20 rounded-lg py-3 px-4 mb-4">
+                    <p className="text-xs text-muted-foreground mb-1">Your Booking Code</p>
+                    <p className="text-2xl font-mono font-bold text-primary tracking-widest">{tokenCode}</p>
+                  </div>
                   <p className="text-muted-foreground text-sm">
-                    Visit Booth #121 at THIT 2026 to collect your copy.
+                    Show this code at Booth #121 at THIT 2026 to collect your copy.
                   </p>
                 </motion.div>
               )}
