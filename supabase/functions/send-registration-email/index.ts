@@ -18,25 +18,17 @@ serve(async (req) => {
       throw new Error('Missing record or email in request body')
     }
 
-    // Generate a unique token number (6 digits)
-    const tokenNumber = String(Math.floor(100000 + Math.random() * 900000))
-    console.log('Generated token:', tokenNumber)
-
-    // Update the record with the token number
-    const supabaseAdmin = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-    )
-
-    // Update the registration with token number
-    const { error: updateError } = await supabaseAdmin
-      .from('thit_registrations')
-      .update({ token_number: tokenNumber })
-      .eq('id', record.id)
-
-    if (updateError) {
-      console.error('Error updating token:', updateError)
-    }
+    // Use the token_number from the record (generated client-side)
+    // Fallback to generating one if not present
+    const tokenNumber = record.token_number || (() => {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let code = '';
+      for (let i = 0; i < 6; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return code;
+    })();
+    console.log('Using token:', tokenNumber)
 
     // Prepare email content
     const emailHtml = `
