@@ -5,14 +5,6 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { supabase } from "@/lib/supabase";
 
-const keyTakeaways = [
-  "Why not all consent is reversible — and how DPDP changes clinical workflows",
-  "How to design informed, defensible consent beyond signatures and forms",
-  "Where DPDP conflicts with healthcare realities — and how to navigate them",
-  'What "audit-ready" truly means in hospitals and health systems',
-  "How governance, technology, and accountability intersect in patient data",
-  "A framework to move from checkbox compliance to system-level orchestration",
-];
 
 export const Proof = () => {
   const sectionRef = useRef(null);
@@ -248,28 +240,18 @@ export const Proof = () => {
             </div>
           </motion.div>
 
-          {/* Key Takeaways - comes second on mobile */}
+          {/* Book Cover Image */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="order-2 lg:order-1"
+            className="order-2 lg:order-1 flex items-center justify-center"
           >
-            <h3 className="text-xl font-bold text-foreground mb-6">Key Takeaways</h3>
-            <ul className="space-y-4">
-              {keyTakeaways.map((takeaway, index) => (
-                <motion.li
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                  transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                  className="flex items-start gap-3"
-                >
-                  <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                  <span className="text-muted-foreground leading-relaxed">{takeaway}</span>
-                </motion.li>
-              ))}
-            </ul>
+            <img
+              src="/book.png"
+              alt="When the CIO Holds the Scalpel - Book Cover"
+              className="w-full max-w-md rounded-lg shadow-2xl"
+            />
           </motion.div>
         </div>
       </div>
