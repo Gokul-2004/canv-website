@@ -24,23 +24,41 @@ const Index = () => {
     restDelta: 0.001,
   });
 
-  // Handle hash navigation for custom scroll container
-  useEffect(() => {
-    const hash = location.hash;
-    if (hash && containerRef.current) {
-      // Small delay to ensure content is rendered
-      const timeoutId = setTimeout(() => {
-        const element = document.querySelector(hash);
-        if (element && containerRef.current) {
-          const containerTop = containerRef.current.getBoundingClientRect().top;
-          const elementTop = element.getBoundingClientRect().top;
-          const scrollPosition = containerRef.current.scrollTop + (elementTop - containerTop);
+  // Scroll to hash helper function
+  const scrollToHash = (hash: string, smooth = true) => {
+    if (!hash || !containerRef.current) return;
 
-          containerRef.current.scrollTo({
-            top: scrollPosition,
-            behavior: "smooth",
-          });
-        }
+    const element = document.getElementById(hash.replace("#", ""));
+    if (element && containerRef.current) {
+      const containerTop = containerRef.current.getBoundingClientRect().top;
+      const elementTop = element.getBoundingClientRect().top;
+      const scrollPosition = containerRef.current.scrollTop + (elementTop - containerTop);
+
+      containerRef.current.scrollTo({
+        top: scrollPosition,
+        behavior: smooth ? "smooth" : "auto",
+      });
+    }
+  };
+
+  // Handle initial page load with hash (for iframes, direct links, refresh)
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      // Wait for content to fully render before scrolling
+      const timeoutId = setTimeout(() => {
+        scrollToHash(hash, false); // Instant scroll on initial load
+      }, 300);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, []); // Empty deps - only run on mount
+
+  // Handle hash navigation for React Router changes
+  useEffect(() => {
+    if (location.hash) {
+      const timeoutId = setTimeout(() => {
+        scrollToHash(location.hash, true);
       }, 100);
 
       return () => clearTimeout(timeoutId);
