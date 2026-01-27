@@ -14,25 +14,18 @@ const products = [
     color: "from-primary/20 to-primary/5",
   },
   {
-    name: "eSignature",
-    title: "Legally enforceable digital execution.",
-    subtitle: "Court-admissible. Tamper-evident.",
-    description: "Because consent without evidence is still a risk.",
-    color: "from-accent/20 to-accent/5",
-  },
-  {
     name: "ConsentRights",
     title: "ABHA-linked identity resolution.",
     subtitle: "Patient rights and grievances handled correctly.",
     description: "Designed for DPDP-scale operations.",
-    color: "from-primary/20 to-accent/5",
+    color: "from-accent/20 to-accent/5",
   },
   {
     name: "ConsentGovern",
     title: "Audit readiness and breach response.",
     subtitle: "Third-party consent and DPA governance.",
     description: "Built for regulatory confidence.",
-    color: "from-accent/20 to-primary/5",
+    color: "from-primary/20 to-accent/5",
   },
 ];
 
