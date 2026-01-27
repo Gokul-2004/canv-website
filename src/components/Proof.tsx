@@ -114,10 +114,7 @@ export const Proof = () => {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
             When the <span className="gradient-text">CIO Holds the Scalpel</span>
           </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-            As India's Digital Personal Data Protection (DPDP) Act reshapes how organizations handle personal data, healthcare faces a challenge unlike any other.
-          </p>
-          <p className="text-muted-foreground leading-relaxed">
+          <p className="text-lg text-muted-foreground leading-relaxed">
             This book is a practical field guide for healthcare leaders navigating the collision between data protection laws, clinical realities, and institutional accountability.
           </p>
         </motion.div>
