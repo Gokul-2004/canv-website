@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { Calendar, MapPin, Mail, Phone, ExternalLink, Award } from "lucide-react";
+import { Calendar, MapPin, ExternalLink, Award } from "lucide-react";
+import { Button } from "./ui/button";
 import certinalLogo from "../../certinal_logo.svg";
 
 const quickLinks = [
@@ -77,22 +78,19 @@ export const Footer = () => {
             <h3 className="text-lg font-bold text-secondary-foreground mb-4">
               Contact
             </h3>
-            <div className="space-y-3">
+            <Button
+              asChild
+              className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-6"
+            >
               <a
-                href="mailto:secretariat@transformhealth-it.org"
-                className="flex items-center gap-3 text-secondary-foreground/70 hover:text-primary transition-colors"
+                href="https://www.certinal.com/contact"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <Mail className="w-5 h-5 text-primary" />
-                <span>secretariat@transformhealth-it.org</span>
+                Contact Us
+                <ExternalLink className="w-4 h-4 ml-2" />
               </a>
-              <a
-                href="tel:+918971810271"
-                className="flex items-center gap-3 text-secondary-foreground/70 hover:text-primary transition-colors"
-              >
-                <Phone className="w-5 h-5 text-primary" />
-                <span>+91 8971810271</span>
-              </a>
-            </div>
+            </Button>
           </motion.div>
         </div>
 
