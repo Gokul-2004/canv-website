@@ -218,22 +218,29 @@ export const Keynote = () => {
             <h3 className="text-xl font-bold text-[#131720] mb-6">
               Session Agenda
             </h3>
-            <div className="space-y-4 flex-1">
+            <div className="flex-1">
               {agenda.map((item, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, x: -20 }}
                   animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                   transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
-                  className="flex items-start gap-4 p-3 rounded-lg hover:bg-white/50 transition-colors"
                 >
-                  <div className="text-primary font-semibold text-sm whitespace-nowrap min-w-[100px]">
-                    {item.time}
+                  <div className="flex items-start gap-4 p-4 rounded-lg hover:bg-white/50 transition-colors">
+                    <div className="text-primary font-semibold text-sm whitespace-nowrap min-w-[110px]">
+                      {item.time}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <p className="font-medium text-[#131720]">{item.title}</p>
+                        <div className="flex-1 border-b border-dotted border-[#131720]/20" />
+                      </div>
+                      <p className="text-sm text-[#131720]/60 mt-1">{item.description}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-medium text-[#131720]">{item.title}</p>
-                    <p className="text-sm text-[#131720]/60">{item.description}</p>
-                  </div>
+                  {index < agenda.length - 1 && (
+                    <div className="border-b border-dashed border-primary/20 mx-4" />
+                  )}
                 </motion.div>
               ))}
             </div>
