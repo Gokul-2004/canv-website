@@ -1,6 +1,6 @@
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { CalendarPlus, CheckCircle, Download } from "lucide-react";
+import { CalendarPlus, Download } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -8,12 +8,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-
-const learnings = [
-  "Why most digital health programs fail at the consent layer",
-  "How mobile-first consent improves compliance and patient trust",
-  "What hospitals must fix in 2026 to stay audit-ready",
-];
 
 const speakers = [
   {
@@ -34,30 +28,49 @@ const speakers = [
     organization: "EY India",
     bio: "Leading cybersecurity and data privacy practice, advising enterprises on DPDP compliance.",
   },
+  {
+    name: "Mr. Kinjal Saxena",
+    title: "Chief Product & Technology Officer",
+    organization: "AIG Hospitals",
+    bio: "Driving product innovation and technology strategy in healthcare delivery.",
+  },
+  {
+    name: "Mr. Jagadeesh Ramasamy",
+    title: "Chief Digital & Information Officer (CDIO)",
+    organization: "Narayana Health",
+    bio: "Leading digital initiatives and information systems across Narayana Health network.",
+  },
+];
+
+const agenda = [
+  { time: "2:10 - 2:50 PM", title: "Panel Discussion", description: "DPDP Enforcement: What CIOs Must Be Ready For" },
+  { time: "2:50 - 3:10 PM", title: "Certinal Product Showcase", description: "Live demonstration of consent automation" },
+  { time: "3:10 - 3:20 PM", title: "Book Unveiling", description: "\"When the CIO Holds the Scalpel\"" },
+  { time: "3:20 - 3:40 PM", title: "Q&A & Interaction", description: "Panelist interaction with audience" },
 ];
 
 // Calendar event details
 const eventDetails = {
-  title: "Certinal Keynote at THIT 2026: Unifying Consent - The Last Broken Step in Digital Care",
-  description: "Join Certinal at THIT 2026 for a keynote on unifying consent in digital healthcare. Learn how to operationalize consent, data rights, and regulatory governance across healthcare workflows.",
+  title: "Certinal Panel at THIT 2026: DPDP Enforcement - What CIOs Must Be Ready For",
+  description: "Join Certinal at THIT 2026 for a panel discussion on DPDP enforcement readiness. Shifting the discussion from theoretical compliance to real-world enforcement readiness, focusing on operational, technical, and organizational preparedness.",
   location: "HICC, Hyderabad, India",
-  startDate: "20260130T090000", // January 30, 2026, 9:00 AM
-  endDate: "20260130T103000", // January 30, 2026, 10:30 AM (assuming 1.5 hour keynote)
+  startDate: "20260130T141000", // January 30, 2026, 2:10 PM
+  endDate: "20260130T154000", // January 30, 2026, 3:40 PM
   timezone: "Asia/Kolkata",
 };
 
 // Generate calendar links
 const generateCalendarLinks = () => {
   const { title, description, location } = eventDetails;
-  
+
   // Google Calendar format: YYYYMMDDTHHMMSSZ (UTC)
-  // January 30, 2026, 9:00 AM IST = 3:30 AM UTC
-  const googleStart = "20260130T033000Z";
-  const googleEnd = "20260130T050000Z";
+  // January 30, 2026, 2:10 PM IST = 8:40 AM UTC
+  const googleStart = "20260130T084000Z";
+  const googleEnd = "20260130T101000Z";
   
   // Outlook Calendar format: ISO 8601
-  const outlookStart = "2026-01-30T09:00:00";
-  const outlookEnd = "2026-01-30T10:30:00";
+  const outlookStart = "2026-01-30T14:10:00";
+  const outlookEnd = "2026-01-30T15:40:00";
   
   // Google Calendar
   const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${googleStart}/${googleEnd}&details=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}`;
@@ -71,10 +84,10 @@ const generateCalendarLinks = () => {
 // Generate and download ICS file
 const downloadICS = () => {
   const { title, description, location } = eventDetails;
-  
+
   // ICS format: YYYYMMDDTHHMMSS
-  const icsStart = "20260130T090000";
-  const icsEnd = "20260130T103000";
+  const icsStart = "20260130T141000";
+  const icsEnd = "20260130T154000";
   const icsStamp = new Date().toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
   
   const icsContent = `BEGIN:VCALENDAR
@@ -97,7 +110,7 @@ END:VCALENDAR`;
   const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = "certinal-thit-2026-keynote.ics";
+  link.download = "certinal-thit-2026-panel.ics";
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -181,18 +194,21 @@ export const Keynote = () => {
           >
             <span className="w-2 h-2 bg-primary rounded-full" />
             <span className="text-sm font-medium text-[#131720]/90">
-              Certinal Keynote at THIT 2026
+              Certinal Panel Discussion at THIT 2026
             </span>
           </motion.div>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#131720] mb-6 max-w-4xl mx-auto leading-tight">
-            Unifying Consent:{" "}
-            <span className="gradient-text">The Last Broken Step</span> in Digital Care
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#131720] mb-4 max-w-4xl mx-auto leading-tight">
+            DPDP Enforcement:{" "}
+            <span className="gradient-text">What CIOs Must Be Ready For</span>
           </h2>
+          <p className="text-lg text-[#131720]/70 max-w-2xl mx-auto">
+            Shifting the discussion from theoretical compliance to real-world enforcement readiness, focusing on operational, technical, and organizational preparedness.
+          </p>
         </motion.div>
         
         <div className="grid lg:grid-cols-2 gap-12 items-stretch">
-          {/* What attendees will learn */}
+          {/* Session Agenda */}
           <motion.div
             initial={{ opacity: 0, x: -60, scale: 0.95 }}
             animate={isInView ? { opacity: 1, x: 0, scale: 1 } : { opacity: 0, x: -60, scale: 0.95 }}
@@ -200,19 +216,24 @@ export const Keynote = () => {
             className="glass-card rounded-2xl p-8 h-full flex flex-col"
           >
             <h3 className="text-xl font-bold text-[#131720] mb-6">
-              What Attendees Will Learn
+              Session Agenda
             </h3>
             <div className="space-y-4 flex-1">
-              {learnings.map((item, index) => (
+              {agenda.map((item, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, x: -20 }}
                   animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                   transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
-                  className="flex items-start gap-3"
+                  className="flex items-start gap-4 p-3 rounded-lg hover:bg-white/50 transition-colors"
                 >
-                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                  <p className="text-[#131720]/80">{item}</p>
+                  <div className="text-primary font-semibold text-sm whitespace-nowrap min-w-[100px]">
+                    {item.time}
+                  </div>
+                  <div>
+                    <p className="font-medium text-[#131720]">{item.title}</p>
+                    <p className="text-sm text-[#131720]/60">{item.description}</p>
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -273,13 +294,13 @@ export const Keynote = () => {
 
           {/* Speakers */}
           <div className="space-y-4 h-full flex flex-col">
-            <motion.h3 
+            <motion.h3
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : { opacity: 0 }}
               transition={{ duration: 0.5 }}
               className="text-xl font-bold text-[#131720] mb-6"
             >
-              Featured Speakers
+              Panel Members
             </motion.h3>
             <div className="space-y-4 flex-1">
               {speakers.map((speaker, index) => (
