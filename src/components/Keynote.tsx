@@ -218,36 +218,32 @@ export const Keynote = () => {
             <h3 className="text-xl font-bold text-[#131720] mb-6">
               Session Agenda
             </h3>
-            <div className="flex">
-              {/* Timeline line */}
-              <div className="flex flex-col items-center mr-4">
-                {agenda.map((_, index) => (
-                  <div key={index} className="flex flex-col items-center">
-                    <div className="w-3 h-3 rounded-full bg-primary border-2 border-primary/30 z-10" />
+            <div className="space-y-0">
+              {agenda.map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                  transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
+                  className="flex"
+                >
+                  {/* Dot + connecting line */}
+                  <div className="flex flex-col items-center mr-4">
+                    <div className="w-3 h-3 rounded-full bg-primary border-2 border-primary/30 flex-shrink-0 mt-1" />
                     {index < agenda.length - 1 && (
-                      <div className="w-0.5 h-16 bg-gradient-to-b from-primary/40 to-primary/10" />
+                      <div className="w-0.5 flex-1 bg-gradient-to-b from-primary/40 to-primary/10 min-h-[3rem]" />
                     )}
                   </div>
-                ))}
-              </div>
-              {/* Agenda items */}
-              <div className="flex-1 space-y-4">
-                {agenda.map((item, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                    transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
-                    className="pb-2"
-                  >
+                  {/* Text content */}
+                  <div className="pb-5">
                     <div className="text-primary font-semibold text-sm mb-1">
                       {item.time}
                     </div>
                     <p className="font-medium text-[#131720]">{item.title}</p>
                     <p className="text-sm text-[#131720]/60">{item.description}</p>
-                  </motion.div>
-                ))}
-              </div>
+                  </div>
+                </motion.div>
+              ))}
             </div>
 
             <motion.div
