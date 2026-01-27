@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS thit_registrations (
   title TEXT,
   phone TEXT,
   consent BOOLEAN NOT NULL DEFAULT false,
+  token_number TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
