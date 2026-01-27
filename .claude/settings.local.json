@@ -8,7 +8,10 @@
       "Bash(cmd /c \"set PATH=C:\\\\Users\\\\Gokul.Krishnan\\\\node;%PATH% && cd /d \"c:UsersGokul.KrishnanOneDrive - ZycusDesktopGit-Website\" && npm run dev\")",
       "Bash(C:UsersGokul.Krishnannodenode.exe C:UsersGokul.Krishnannodenode_modulesnpmbinnpm-cli.js run dev --prefix \"c:\\\\Users\\\\Gokul.Krishnan\\\\OneDrive - Zycus\\\\Desktop\\\\Git-Website\")",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(node --version:*)",
+      "Bash(C:UsersGokul.Krishnannodenpm run dev)",
+      "Bash(timeout:*)"
     ]
   }
 }

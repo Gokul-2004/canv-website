@@ -90,14 +90,14 @@ export const Hero = () => {
         />
       </div>
 
-      <div className="container-tight relative z-10 pt-24 pb-20 md:pt-28 md:pb-24 flex-1 flex flex-col justify-center">
+      <div className="container-tight relative z-10 pt-20 pb-8 md:pt-24 md:pb-12 flex-1 flex flex-col justify-center">
         <div className="max-w-4xl mx-auto text-center">
           {/* Sponsor Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="mb-6"
+            className="mb-4"
           >
             <span className="inline-flex items-center rounded-full bg-gradient-to-r from-slate-100 to-cyan-200 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-slate-900">
               Platinum Sponsor & Keynote Partner
@@ -109,7 +109,7 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4"
+            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-2"
           >
             Certinal at Apollo THIT 2026
           </motion.h1>
@@ -119,7 +119,7 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="mb-8"
+            className="mb-5"
           >
             <p className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground leading-[1.1]">
               CERTINAL'S <span className="gradient-text">HEALTHCARE</span>
@@ -134,7 +134,7 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16 mb-8"
+            className="flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-12 mb-5"
           >
             {/* Left - Event Details */}
             <div className="flex items-center justify-center gap-4 sm:gap-6 text-foreground/70 text-sm sm:text-base">
@@ -150,7 +150,7 @@ export const Hero = () => {
 
             {/* Right - Countdown Timer */}
             <div className="flex flex-col items-center">
-              <p className="text-foreground/60 mb-3 text-sm uppercase tracking-wider">
+              <p className="text-foreground/60 mb-2 text-sm uppercase tracking-wider">
                 Event starts in
               </p>
               <CountdownTimer />
@@ -162,7 +162,7 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="text-sm sm:text-base md:text-lg text-foreground/60 max-w-3xl mx-auto mb-10 leading-relaxed px-2 sm:px-0"
+            className="text-sm sm:text-base md:text-lg text-foreground/60 max-w-3xl mx-auto mb-6 leading-relaxed px-2 sm:px-0"
           >
             At Apollo THIT – Transforming Healthcare with IT 2026, Certinal leads the conversation on consent, compliance, and governance in the DPDP era.
           </motion.p>
@@ -172,7 +172,7 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.9 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-12 px-4 sm:px-0"
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-6 px-4 sm:px-0"
           >
             <Button
               asChild
@@ -212,7 +212,7 @@ export const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        className="absolute bottom-4 left-1/2 -translate-x-1/2"
       >
         <motion.div
           animate={{ y: [0, 10, 0] }}
