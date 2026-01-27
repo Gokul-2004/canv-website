@@ -207,38 +207,38 @@ export const Keynote = () => {
           </p>
         </motion.div>
         
-        <div className="grid lg:grid-cols-2 gap-12 items-stretch">
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Session Agenda */}
           <motion.div
             initial={{ opacity: 0, x: -60, scale: 0.95 }}
             animate={isInView ? { opacity: 1, x: 0, scale: 1 } : { opacity: 0, x: -60, scale: 0.95 }}
             transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="glass-card rounded-2xl p-8 h-full flex flex-col"
+            className="glass-card rounded-2xl p-8"
           >
             <h3 className="text-xl font-bold text-[#131720] mb-6">
               Session Agenda
             </h3>
-            <div className="flex-1 flex">
+            <div className="flex">
               {/* Timeline line */}
               <div className="flex flex-col items-center mr-4">
                 {agenda.map((_, index) => (
-                  <div key={index} className="flex flex-col items-center flex-1">
+                  <div key={index} className="flex flex-col items-center">
                     <div className="w-3 h-3 rounded-full bg-primary border-2 border-primary/30 z-10" />
                     {index < agenda.length - 1 && (
-                      <div className="w-0.5 flex-1 bg-gradient-to-b from-primary/40 to-primary/10" style={{ minHeight: '60px' }} />
+                      <div className="w-0.5 h-16 bg-gradient-to-b from-primary/40 to-primary/10" />
                     )}
                   </div>
                 ))}
               </div>
               {/* Agenda items */}
-              <div className="flex-1 flex flex-col justify-between">
+              <div className="flex-1 space-y-4">
                 {agenda.map((item, index) => (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, x: -20 }}
                     animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
-                    className="flex-1 flex flex-col justify-center"
+                    className="pb-2"
                   >
                     <div className="text-primary font-semibold text-sm mb-1">
                       {item.time}
@@ -253,7 +253,7 @@ export const Keynote = () => {
             <motion.div
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="mt-8"
+              className="mt-6"
             >
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -305,7 +305,7 @@ export const Keynote = () => {
           </motion.div>
 
           {/* Speakers */}
-          <div className="space-y-4 h-full flex flex-col">
+          <div>
             <motion.h3
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : { opacity: 0 }}
@@ -314,7 +314,7 @@ export const Keynote = () => {
             >
               Panel Members
             </motion.h3>
-            <div className="space-y-4 flex-1">
+            <div className="space-y-4">
               {speakers.map((speaker, index) => (
                 <SpeakerCard key={speaker.name} speaker={speaker} index={index} />
               ))}
