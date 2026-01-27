@@ -110,27 +110,11 @@ export const WhyCertinal = () => {
       />
 
       <div className="container-tight py-16 md:py-20">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 60 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
-          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="text-center max-w-4xl mx-auto mb-12"
-        >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            Why This <span className="gradient-text">Matters</span>
-          </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            India's healthcare landscape is governed by multiple mandates.{" "}
-            <span className="text-foreground font-medium">Each one touches consent differently.</span>
-          </p>
-        </motion.div>
-
         {/* Stats */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ duration: 0.6 }}
           className="flex items-center justify-center gap-8 sm:gap-12 md:gap-20 mb-12"
         >
           {stats.map((stat, index) => (
@@ -138,7 +122,7 @@ export const WhyCertinal = () => {
               key={stat.label}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-              transition={{ delay: 0.4 + index * 0.1 }}
+              transition={{ delay: 0.1 + index * 0.1 }}
               className="text-center"
             >
               <stat.icon className="w-6 h-6 text-primary mx-auto mb-2" />
@@ -148,6 +132,22 @@ export const WhyCertinal = () => {
               <div className="text-sm text-muted-foreground">{stat.label}</div>
             </motion.div>
           ))}
+        </motion.div>
+
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 60 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="text-center max-w-4xl mx-auto mb-12"
+        >
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
+            Why This <span className="gradient-text">Matters</span>
+          </h2>
+          <p className="text-lg text-muted-foreground leading-relaxed">
+            India's healthcare landscape is governed by multiple mandates.{" "}
+            <span className="text-foreground font-medium">Each one touches consent differently.</span>
+          </p>
         </motion.div>
 
         {/* Regulations Grid */}
