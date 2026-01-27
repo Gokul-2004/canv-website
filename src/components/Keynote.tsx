@@ -218,31 +218,36 @@ export const Keynote = () => {
             <h3 className="text-xl font-bold text-[#131720] mb-6">
               Session Agenda
             </h3>
-            <div className="flex-1">
-              {agenda.map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                  transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
-                >
-                  <div className="flex items-start gap-4 p-4 rounded-lg hover:bg-white/50 transition-colors">
-                    <div className="text-primary font-semibold text-sm whitespace-nowrap min-w-[110px]">
+            <div className="flex-1 flex">
+              {/* Timeline line */}
+              <div className="flex flex-col items-center mr-4">
+                {agenda.map((_, index) => (
+                  <div key={index} className="flex flex-col items-center flex-1">
+                    <div className="w-3 h-3 rounded-full bg-primary border-2 border-primary/30 z-10" />
+                    {index < agenda.length - 1 && (
+                      <div className="w-0.5 flex-1 bg-gradient-to-b from-primary/40 to-primary/10" style={{ minHeight: '60px' }} />
+                    )}
+                  </div>
+                ))}
+              </div>
+              {/* Agenda items */}
+              <div className="flex-1 flex flex-col justify-between">
+                {agenda.map((item, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                    transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
+                    className="flex-1 flex flex-col justify-center"
+                  >
+                    <div className="text-primary font-semibold text-sm mb-1">
                       {item.time}
                     </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2">
-                        <p className="font-medium text-[#131720]">{item.title}</p>
-                        <div className="flex-1 border-b border-dotted border-[#131720]/20" />
-                      </div>
-                      <p className="text-sm text-[#131720]/60 mt-1">{item.description}</p>
-                    </div>
-                  </div>
-                  {index < agenda.length - 1 && (
-                    <div className="border-b border-dashed border-primary/20 mx-4" />
-                  )}
-                </motion.div>
-              ))}
+                    <p className="font-medium text-[#131720]">{item.title}</p>
+                    <p className="text-sm text-[#131720]/60">{item.description}</p>
+                  </motion.div>
+                ))}
+              </div>
             </div>
 
             <motion.div
