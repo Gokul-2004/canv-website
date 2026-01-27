@@ -1,5 +1,6 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
+import { useLocation } from "react-router-dom";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import WhyCertinal from "@/components/WhyCertinal";
@@ -11,6 +12,7 @@ import Footer from "@/components/Footer";
 
 const Index = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
 
   const { scrollYProgress } = useScroll({
     container: containerRef,
@@ -21,6 +23,29 @@ const Index = () => {
     damping: 30,
     restDelta: 0.001,
   });
+
+  // Handle hash navigation for custom scroll container
+  useEffect(() => {
+    const hash = location.hash;
+    if (hash && containerRef.current) {
+      // Small delay to ensure content is rendered
+      const timeoutId = setTimeout(() => {
+        const element = document.querySelector(hash);
+        if (element && containerRef.current) {
+          const containerTop = containerRef.current.getBoundingClientRect().top;
+          const elementTop = element.getBoundingClientRect().top;
+          const scrollPosition = containerRef.current.scrollTop + (elementTop - containerTop);
+
+          containerRef.current.scrollTo({
+            top: scrollPosition,
+            behavior: "smooth",
+          });
+        }
+      }, 100);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [location.hash]);
 
   return (
     <div className="relative bg-background">
