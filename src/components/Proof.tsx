@@ -245,7 +245,7 @@ export const Proof = () => {
             className="order-2 lg:order-1 flex items-center justify-center"
           >
             <img
-              src="/book.png.png"
+              src="/new_book.png"
               alt="When the CIO Holds the Scalpel - Book Cover"
               className="w-full max-w-md rounded-lg shadow-2xl"
             />
