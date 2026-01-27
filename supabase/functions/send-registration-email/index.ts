@@ -8,10 +8,19 @@ const RESEND_FROM_EMAIL = Deno.env.get('RESEND_FROM_EMAIL') || 'noreply@certinal
 serve(async (req) => {
   try {
     // Get the request body
-    const { record } = await req.json()
+    const body = await req.json()
+    console.log('Received request body:', JSON.stringify(body))
+    
+    const record = body.record || body
+    console.log('Processing record:', JSON.stringify(record))
+    
+    if (!record || !record.email) {
+      throw new Error('Missing record or email in request body')
+    }
 
     // Generate a unique token number (6 digits)
     const tokenNumber = String(Math.floor(100000 + Math.random() * 900000))
+    console.log('Generated token:', tokenNumber)
 
     // Update the record with the token number
     const supabaseAdmin = createClient(
@@ -126,6 +135,14 @@ serve(async (req) => {
       </html>
     `
 
+    // Check if API key is set
+    if (!RESEND_API_KEY) {
+      throw new Error('RESEND_API_KEY is not set')
+    }
+    
+    console.log('Sending email to:', record.email)
+    console.log('From email:', RESEND_FROM_EMAIL)
+    
     // Send email via Resend
     const resendResponse = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -141,9 +158,12 @@ serve(async (req) => {
       }),
     })
 
+    console.log('Resend response status:', resendResponse.status)
+    
     if (!resendResponse.ok) {
-      const error = await resendResponse.json()
-      throw new Error(`Resend API error: ${JSON.stringify(error)}`)
+      const errorText = await resendResponse.text()
+      console.error('Resend API error:', errorText)
+      throw new Error(`Resend API error: ${resendResponse.status} - ${errorText}`)
     }
 
     const emailData = await resendResponse.json()
