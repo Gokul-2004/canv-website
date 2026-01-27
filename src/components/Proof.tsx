@@ -28,7 +28,7 @@ export const Proof = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (name && email && title && consent) {
+    if (name && email && consent) {
       setIsSubmitting(true);
       setError(null);
 
@@ -49,7 +49,7 @@ export const Proof = () => {
             {
               name,
               email,
-              title,
+              title: title || null,
               phone: phone || null,
               consent,
               created_at: new Date().toISOString(),
@@ -148,7 +148,7 @@ export const Proof = () => {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
-                      Name
+                      Name <span className="text-red-500">*</span>
                     </label>
                     <Input
                       id="name"
@@ -162,7 +162,7 @@ export const Proof = () => {
                   </div>
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-                      Work Email
+                      Work Email <span className="text-red-500">*</span>
                     </label>
                     <Input
                       id="email"
@@ -184,13 +184,12 @@ export const Proof = () => {
                       placeholder="e.g. CIO, CISO, Hospital Administrator"
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
-                      required
                       className="w-full"
                     />
                   </div>
                   <div>
                     <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
-                      Phone Number <span className="text-muted-foreground font-normal">(Optional)</span>
+                      Phone Number
                     </label>
                     <Input
                       id="phone"
@@ -211,7 +210,7 @@ export const Proof = () => {
                       className="mt-1 h-4 w-4 rounded border-border text-primary focus:ring-primary"
                     />
                     <label htmlFor="consent" className="text-sm text-muted-foreground leading-relaxed">
-                      I agree to receive communications from Certinal about DPDP and healthcare compliance
+                      I agree to receive communications from Certinal about DPDP and healthcare compliance <span className="text-red-500">*</span>
                     </label>
                   </div>
                   {error && (

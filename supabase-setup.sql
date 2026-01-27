@@ -6,8 +6,8 @@ CREATE TABLE IF NOT EXISTS thit_registrations (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL,
   email TEXT NOT NULL,
-  title TEXT NOT NULL,
-  phone TEXT NOT NULL,
+  title TEXT,
+  phone TEXT,
   consent BOOLEAN NOT NULL DEFAULT false,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
