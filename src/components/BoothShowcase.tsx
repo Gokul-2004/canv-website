@@ -102,7 +102,7 @@ export const BoothShowcase = () => {
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 gap-6 md:gap-8 mb-16 items-stretch max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-16 items-stretch">
           {products.map((product, index) => (
             <ProductCard key={product.name} product={product} index={index} />
           ))}
