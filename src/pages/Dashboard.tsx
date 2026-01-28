@@ -7,6 +7,7 @@ interface Registration {
   id: string;
   name: string;
   email: string;
+  company: string;
   title: string | null;
   phone: string | null;
   token_number: string | null;
@@ -59,7 +60,7 @@ const Dashboard = () => {
   }, []);
 
   const exportToCSV = () => {
-    const headers = ["Token", "Name", "Email", "Title", "Phone", "Registered At"];
+    const headers = ["Token", "Name", "Email", "Company", "Title", "Phone", "Registered At"];
     const csvContent = [
       headers.join(","),
       ...registrations.map((r) =>
@@ -67,6 +68,7 @@ const Dashboard = () => {
           r.token_number || "",
           `"${r.name}"`,
           r.email,
+          `"${r.company || ""}"`,
           r.title || "",
           r.phone || "",
           new Date(r.created_at).toLocaleString(),
@@ -217,6 +219,9 @@ const Dashboard = () => {
                     Email
                   </th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    Company
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                     Title
                   </th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
@@ -230,13 +235,13 @@ const Dashboard = () => {
               <tbody className="divide-y divide-gray-100">
                 {loading ? (
                   <tr>
-                    <td colSpan={6} className="px-6 py-12 text-center text-gray-500">
+                    <td colSpan={7} className="px-6 py-12 text-center text-gray-500">
                       Loading...
                     </td>
                   </tr>
                 ) : registrations.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="px-6 py-12 text-center text-gray-500">
+                    <td colSpan={7} className="px-6 py-12 text-center text-gray-500">
                       No registrations yet
                     </td>
                   </tr>
@@ -252,6 +257,7 @@ const Dashboard = () => {
                         {reg.name}
                       </td>
                       <td className="px-6 py-4 text-gray-600">{reg.email}</td>
+                      <td className="px-6 py-4 text-gray-600">{reg.company || "-"}</td>
                       <td className="px-6 py-4 text-gray-600">{reg.title || "-"}</td>
                       <td className="px-6 py-4 text-gray-600">{reg.phone || "-"}</td>
                       <td className="px-6 py-4 text-gray-500 text-sm">
