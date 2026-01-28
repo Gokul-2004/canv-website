@@ -7,102 +7,129 @@ interface SupabaseResponse<T> {
   error: { message: string } | null;
 }
 
+// Query builder class
+class QueryBuilder {
+  private table: string;
+  private queryParams: string[] = [];
+  private selectColumns: string = '*';
+
+  constructor(table: string) {
+    this.table = table;
+  }
+
+  select(columns = '*') {
+    this.selectColumns = columns;
+    return this;
+  }
+
+  order(column: string, options?: { ascending?: boolean }) {
+    const direction = options?.ascending === false ? 'desc' : 'asc';
+    this.queryParams.push(`order=${column}.${direction}`);
+    return this;
+  }
+
+  async then<T>(resolve: (value: SupabaseResponse<T[]>) => void) {
+    const result = await this.execute<T>();
+    resolve(result);
+  }
+
+  private async execute<T>(): Promise<SupabaseResponse<T[]>> {
+    if (!supabaseUrl || !supabaseAnonKey) {
+      return {
+        data: null,
+        error: { message: 'Missing Supabase environment variables' },
+      };
+    }
+
+    try {
+      const params = [`select=${this.selectColumns}`, ...this.queryParams].join('&');
+      const response = await fetch(`${supabaseUrl}/rest/v1/${this.table}?${params}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': supabaseAnonKey,
+          'Authorization': `Bearer ${supabaseAnonKey}`,
+        },
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Supabase REST error:', errorText);
+        return {
+          data: null,
+          error: { message: `HTTP ${response.status}: ${errorText}` },
+        };
+      }
+
+      const data = await response.json();
+      return { data, error: null };
+    } catch (err) {
+      console.error('Supabase fetch error:', err);
+      return {
+        data: null,
+        error: { message: err instanceof Error ? err.message : 'Unknown error' },
+      };
+    }
+  }
+}
+
+// Insert builder class
+class InsertBuilder {
+  private table: string;
+  private records: Record<string, unknown>[];
+
+  constructor(table: string, records: Record<string, unknown>[]) {
+    this.table = table;
+    this.records = records;
+  }
+
+  async select(): Promise<SupabaseResponse<Record<string, unknown>[]>> {
+    if (!supabaseUrl || !supabaseAnonKey) {
+      return {
+        data: null,
+        error: { message: 'Missing Supabase environment variables' },
+      };
+    }
+
+    try {
+      const response = await fetch(`${supabaseUrl}/rest/v1/${this.table}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': supabaseAnonKey,
+          'Authorization': `Bearer ${supabaseAnonKey}`,
+          'Prefer': 'return=representation',
+        },
+        body: JSON.stringify(this.records),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Supabase REST error:', errorText);
+        return {
+          data: null,
+          error: { message: `HTTP ${response.status}: ${errorText}` },
+        };
+      }
+
+      const data = await response.json();
+      return { data, error: null };
+    } catch (err) {
+      console.error('Supabase fetch error:', err);
+      return {
+        data: null,
+        error: { message: err instanceof Error ? err.message : 'Unknown error' },
+      };
+    }
+  }
+}
+
 // Simple Supabase client using REST API
 export const supabase = {
-  from: (table: string) => {
-    let queryParams: string[] = [];
-
-    const buildQuery = () => ({
-      select: async (columns = '*'): Promise<SupabaseResponse<Record<string, unknown>[]>> => {
-        if (!supabaseUrl || !supabaseAnonKey) {
-          return {
-            data: null,
-            error: { message: 'Missing Supabase environment variables' },
-          };
-        }
-
-        try {
-          const params = queryParams.length > 0 ? `?${queryParams.join('&')}&select=${columns}` : `?select=${columns}`;
-          const response = await fetch(`${supabaseUrl}/rest/v1/${table}${params}`, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'apikey': supabaseAnonKey,
-              'Authorization': `Bearer ${supabaseAnonKey}`,
-            },
-          });
-
-          if (!response.ok) {
-            const errorText = await response.text();
-            console.error('Supabase REST error:', errorText);
-            return {
-              data: null,
-              error: { message: `HTTP ${response.status}: ${errorText}` },
-            };
-          }
-
-          const data = await response.json();
-          return { data, error: null };
-        } catch (err) {
-          console.error('Supabase fetch error:', err);
-          return {
-            data: null,
-            error: { message: err instanceof Error ? err.message : 'Unknown error' },
-          };
-        }
-      },
-      order: (column: string, options?: { ascending?: boolean }) => {
-        const direction = options?.ascending === false ? 'desc' : 'asc';
-        queryParams.push(`order=${column}.${direction}`);
-        return buildQuery();
-      },
-    });
-
-    return {
-      ...buildQuery(),
-      insert: (records: Record<string, unknown>[]) => ({
-        select: async (): Promise<SupabaseResponse<Record<string, unknown>[]>> => {
-          if (!supabaseUrl || !supabaseAnonKey) {
-            return {
-              data: null,
-              error: { message: 'Missing Supabase environment variables' },
-            };
-          }
-
-          try {
-            const response = await fetch(`${supabaseUrl}/rest/v1/${table}`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'apikey': supabaseAnonKey,
-                'Authorization': `Bearer ${supabaseAnonKey}`,
-                'Prefer': 'return=representation',
-              },
-              body: JSON.stringify(records),
-            });
-
-            if (!response.ok) {
-              const errorText = await response.text();
-              console.error('Supabase REST error:', errorText);
-              return {
-                data: null,
-                error: { message: `HTTP ${response.status}: ${errorText}` },
-              };
-            }
-
-            const data = await response.json();
-            return { data, error: null };
-          } catch (err) {
-            console.error('Supabase fetch error:', err);
-            return {
-              data: null,
-              error: { message: err instanceof Error ? err.message : 'Unknown error' },
-            };
-          }
-        },
-      }),
-    };
-  },
+  from: (table: string) => ({
+    select: (columns = '*') => new QueryBuilder(table).select(columns),
+    insert: (records: Record<string, unknown>[]) => new InsertBuilder(table, records),
+  }),
   // Stub for channel - real-time not supported in REST mode
   channel: () => ({
     on: () => ({ subscribe: () => ({}) }),
