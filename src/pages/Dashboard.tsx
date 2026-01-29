@@ -95,6 +95,7 @@ const Dashboard = () => {
   const startEditing = (reg: Registration) => {
     setEditingId(reg.id);
     setEditValues({
+      title: reg.title || "",
       company: reg.company || "",
       book_collected: reg.book_collected || false,
       correct_email_id: reg.correct_email_id || "",
@@ -110,6 +111,7 @@ const Dashboard = () => {
     const { error } = await supabase
       .from("thit_registrations")
       .update({
+        title: editValues.title,
         company: editValues.company,
         book_collected: editValues.book_collected,
         correct_email_id: editValues.correct_email_id,
@@ -309,7 +311,34 @@ const Dashboard = () => {
                           {reg.name}
                         </td>
                         <td className="px-6 py-4 text-gray-600">{reg.email}</td>
-                        <td className="px-6 py-4 text-gray-600">{reg.title || "-"}</td>
+                        <td className="px-6 py-4">
+                          {isEditing ? (
+                            <select
+                              value={editValues.title || ""}
+                              onChange={(e) =>
+                                setEditValues({ ...editValues, title: e.target.value })
+                              }
+                              className="w-full px-3 py-2 rounded-md border border-input bg-background text-sm"
+                            >
+                              <option value="">Select title</option>
+                              <option value="CEO">CEO</option>
+                              <option value="COO">COO</option>
+                              <option value="CFO">CFO</option>
+                              <option value="CTO">CTO</option>
+                              <option value="CIO">CIO</option>
+                              <option value="CISO">CISO</option>
+                              <option value="CDO">CDO</option>
+                              <option value="CMO">CMO</option>
+                              <option value="VP of IT">VP of IT</option>
+                              <option value="VP of Procurement">VP of Procurement</option>
+                              <option value="Director of Procurement">Director of Procurement</option>
+                              <option value="Director of IT">Director of IT</option>
+                              <option value="Other">Other</option>
+                            </select>
+                          ) : (
+                            <span className="text-gray-600">{reg.title || "-"}</span>
+                          )}
+                        </td>
                         <td className="px-6 py-4 text-gray-600">{reg.phone || "-"}</td>
                         <td className="px-6 py-4">
                           {isEditing ? (
