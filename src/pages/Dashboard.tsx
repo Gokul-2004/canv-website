@@ -313,28 +313,15 @@ const Dashboard = () => {
                         <td className="px-6 py-4 text-gray-600">{reg.email}</td>
                         <td className="px-6 py-4">
                           {isEditing ? (
-                            <select
+                            <Input
+                              type="text"
                               value={editValues.title || ""}
                               onChange={(e) =>
                                 setEditValues({ ...editValues, title: e.target.value })
                               }
-                              className="w-full px-3 py-2 rounded-md border border-input bg-background text-sm"
-                            >
-                              <option value="">Select title</option>
-                              <option value="CEO">CEO</option>
-                              <option value="COO">COO</option>
-                              <option value="CFO">CFO</option>
-                              <option value="CTO">CTO</option>
-                              <option value="CIO">CIO</option>
-                              <option value="CISO">CISO</option>
-                              <option value="CDO">CDO</option>
-                              <option value="CMO">CMO</option>
-                              <option value="VP of IT">VP of IT</option>
-                              <option value="VP of Procurement">VP of Procurement</option>
-                              <option value="Director of Procurement">Director of Procurement</option>
-                              <option value="Director of IT">Director of IT</option>
-                              <option value="Other">Other</option>
-                            </select>
+                              className="w-full"
+                              placeholder="Job title"
+                            />
                           ) : (
                             <span className="text-gray-600">{reg.title || "-"}</span>
                           )}
