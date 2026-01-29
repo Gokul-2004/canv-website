@@ -11,7 +11,6 @@ export const Proof = () => {
   const isInView = useInView(sectionRef, { once: false, margin: "-20%" });
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [company, setCompany] = useState("");
   const [title, setTitle] = useState("");
   const [phone, setPhone] = useState("");
   const [consent, setConsent] = useState(false);
@@ -22,7 +21,7 @@ export const Proof = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (name && email && company && title && consent) {
+    if (name && email && consent) {
       setIsSubmitting(true);
       setError(null);
 
@@ -35,7 +34,7 @@ export const Proof = () => {
           throw new Error('Supabase is not configured. Please check environment variables.');
         }
 
-        console.log('📤 Submitting form data:', { name, email, company, title, phone, consent });
+        console.log('📤 Submitting form data:', { name, email, title, phone, consent });
 
         const { data, error: insertError } = await supabase
           .from('thit_registrations')
@@ -43,7 +42,6 @@ export const Proof = () => {
             {
               name,
               email,
-              company,
               title: title || null,
               phone: phone || null,
               consent,
@@ -68,7 +66,6 @@ export const Proof = () => {
         // Reset form
         setName('');
         setEmail('');
-        setCompany('');
         setTitle('');
         setPhone('');
         setConsent(false);
@@ -175,28 +172,13 @@ export const Proof = () => {
                     />
                   </div>
                   <div>
-                    <label htmlFor="company" className="block text-sm font-medium text-foreground mb-2">
-                      Company Name <span className="text-red-500">*</span>
-                    </label>
-                    <Input
-                      id="company"
-                      type="text"
-                      placeholder="Your company name"
-                      value={company}
-                      onChange={(e) => setCompany(e.target.value)}
-                      required
-                      className="w-full"
-                    />
-                  </div>
-                  <div>
                     <label htmlFor="title" className="block text-sm font-medium text-foreground mb-2">
-                      Title <span className="text-red-500">*</span>
+                      Title
                     </label>
                     <select
                       id="title"
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
-                      required
                       className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                     >
                       <option value="">Select your title</option>
@@ -288,7 +270,7 @@ export const Proof = () => {
             className="order-2 lg:order-1 flex items-center justify-center"
           >
             <img
-              src="/new_book.png"
+              src="/image(1).png"
               alt="When the CIO Holds the Scalpel - Book Cover"
               className="w-full max-w-md rounded-lg shadow-2xl"
             />
