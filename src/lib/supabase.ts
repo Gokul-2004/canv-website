@@ -124,11 +124,75 @@ class InsertBuilder {
   }
 }
 
+// Update builder class
+class UpdateBuilder {
+  private table: string;
+  private updates: Record<string, unknown>;
+  private filters: string[] = [];
+
+  constructor(table: string, updates: Record<string, unknown>) {
+    this.table = table;
+    this.updates = updates;
+  }
+
+  eq(column: string, value: unknown) {
+    this.filters.push(`${column}=eq.${value}`);
+    return this;
+  }
+
+  async then(resolve: (value: SupabaseResponse<Record<string, unknown>[]>) => void) {
+    const result = await this.execute();
+    resolve(result);
+  }
+
+  private async execute(): Promise<SupabaseResponse<Record<string, unknown>[]>> {
+    if (!supabaseUrl || !supabaseAnonKey) {
+      return {
+        data: null,
+        error: { message: 'Missing Supabase environment variables' },
+      };
+    }
+
+    try {
+      const filterQuery = this.filters.join('&');
+      const response = await fetch(`${supabaseUrl}/rest/v1/${this.table}?${filterQuery}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': supabaseAnonKey,
+          'Authorization': `Bearer ${supabaseAnonKey}`,
+          'Prefer': 'return=representation',
+        },
+        body: JSON.stringify(this.updates),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Supabase REST error:', errorText);
+        return {
+          data: null,
+          error: { message: `HTTP ${response.status}: ${errorText}` },
+        };
+      }
+
+      const data = await response.json();
+      return { data, error: null };
+    } catch (err) {
+      console.error('Supabase fetch error:', err);
+      return {
+        data: null,
+        error: { message: err instanceof Error ? err.message : 'Unknown error' },
+      };
+    }
+  }
+}
+
 // Simple Supabase client using REST API
 export const supabase = {
   from: (table: string) => ({
     select: (columns = '*') => new QueryBuilder(table).select(columns),
     insert: (records: Record<string, unknown>[]) => new InsertBuilder(table, records),
+    update: (updates: Record<string, unknown>) => new UpdateBuilder(table, updates),
   }),
   // Stub for channel - real-time not supported in REST mode
   channel: () => ({
